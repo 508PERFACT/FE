@@ -1,9 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ChatBotPage } from './page/ChatBotPage';
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>{/* <Route path="/" element={<HomePage />} /> */}</Routes>
+      <Routes>
+        <Route path="/chatbot" element={<ChatBotPage />} />
+      </Routes>
     </BrowserRouter>
   );
 }
