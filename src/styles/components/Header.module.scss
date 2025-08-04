@@ -1,0 +1,37 @@
+@use '../variables' as *;
+
+.container {
+  @include flex();
+  width: 100%;
+  height: min(114px, 30vh);
+  position: fixed;
+  background-color: white;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 15%);
+  .content {
+    @include flex($justify-content: space-between);
+    width: 100%;
+    max-width: calc(1920px - 667px);
+    .blank {
+      display: flex;
+      flex: 1 1 0;
+    }
+    .rightWrapper {
+      flex: 1 1 0;
+      @include flex($gap: 52px);
+      .planButton {
+        padding: 10px 27.5px;
+        border-radius: 10px;
+        border: 2px solid $color-main;
+        background-color: white;
+        span {
+          font-size: rem(21px);
+          font-weight: 500;
+          color: $color-main;
+        }
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
