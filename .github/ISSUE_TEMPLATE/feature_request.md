@@ -1,8 +1,14 @@
-## 🐞 이슈 제목 (ex. 로그인 API 오류 처리 추가)
+---
+name: Feature Request
+about: 새로운 기능 또는 작업 추가
+title: '[FEATURE] '
+labels: feature
+---
+
+## 🐞 이슈 제목
 
 ### ✅ 이슈 유형
 
-- [ ] 버그
 - [ ] 기능 추가
 - [ ] 리팩터링
 - [ ] 문서화
