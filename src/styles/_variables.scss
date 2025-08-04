@@ -1,0 +1,19 @@
+// @use './variables' as *; 불러오기
+// color: $color-main 사용
+
+// 색상
+$color-main: #3a68ff;
+$color-sub: #424145;
+
+@mixin flex(
+  $direction: row,
+  $align-items: center,
+  $justify-content: center,
+  $gap: null
+) {
+  display: flex;
+  align-items: $align-items;
+  justify-content: $justify-content;
+  flex-direction: $direction;
+  gap: $gap;
+}
