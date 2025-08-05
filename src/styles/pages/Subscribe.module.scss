@@ -1,0 +1,65 @@
+@use '../variables' as *;
+
+.container {
+  @include flex(column, $justify-content: flex-start, $gap: vh(40px));
+  padding-top: vh(114px + 82px);
+  .title {
+    @include flex($gap: vw(10px));
+    span {
+      font-size: rem(22px);
+      font-weight: 500;
+      color: $color-sub;
+    }
+  }
+
+  .content {
+    @include flex(column);
+    width: vw(1264px);
+    background-color: white;
+    padding: vw(49px) vw(82px) 0 vw(82px);
+    font-size: rem(22px);
+    table {
+      width: vw(732px);
+      border-spacing: 0;
+      thead {
+        background-color: $color-main;
+        td {
+          padding: 9px 20px;
+          color: white;
+        }
+      }
+      tr {
+        td {
+          padding: 21px 20px;
+          color: $color-sub;
+        }
+      }
+    }
+  }
+  .buttonWrapper {
+    @include flex(column, $gap: 20px);
+    width: 100%;
+    margin-top: 80px;
+    .button {
+      font-size: rem(22px);
+      width: 100%;
+      max-width: 498px;
+      height: vh(72px);
+      border: none;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+      border-radius: 12px;
+      color: white;
+      background-color: #aaaaaa;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .caption {
+      color: #aaaaaa;
+      font-size: rem(20px);
+    }
+    .isSubscribe {
+      background-color: $color-main;
+    }
+  }
+}
