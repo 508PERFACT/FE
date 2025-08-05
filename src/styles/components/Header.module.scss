@@ -36,3 +36,13 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .container {
+    height: 140px;
+    .content {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+}
