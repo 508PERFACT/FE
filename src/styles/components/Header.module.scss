@@ -10,14 +10,14 @@
   .content {
     @include flex($justify-content: space-between);
     width: 100%;
-    max-width: calc(1920px - 667px);
+    max-width: calc(1920px - 1024px);
     .blank {
       display: flex;
       flex: 1 1 0;
     }
     .rightWrapper {
       flex: 1 1 0;
-      @include flex($gap: 52px);
+      @include flex($gap: 52px, $justify-content: flex-end);
       .planButton {
         padding: 10px 27.5px;
         border-radius: 10px;

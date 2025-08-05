@@ -12,7 +12,7 @@ export const Header = () => {
         </div>
         <div className={styles.rightWrapper}>
           <div className={styles.planButton}>
-            <span>구독 플랜</span>
+            <span>구독플랜</span>
           </div>
           <div className={styles.logoIcon}>
             <img src={logo_header} alt="logo" />
