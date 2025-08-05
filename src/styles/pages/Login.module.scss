@@ -1,0 +1,52 @@
+@use '../variables' as *;
+
+.container {
+  @include flex(column, $align-items: flex-start, $justify-content: center);
+  width: 100vw;
+  height: 100vh;
+  padding-left: vw(147px);
+  .content {
+    @include flex(column, $align-items: center, $gap: vh(47px));
+    width: vw(498px);
+    .logo {
+    }
+    .titleContainer {
+      @include flex(column, $align-items: center, $gap: vh(23px));
+      margin-bottom: vh(180px);
+      .title {
+        color: $color-sub;
+        font-size: rem(40px);
+        color: #000;
+        font-weight: 600;
+      }
+      .subTitle {
+        color: #aaaaaa;
+        font-size: rem(20px);
+      }
+    }
+    .button {
+      @include flex(column, $gap: rem(22px));
+      width: 100%;
+      .serviceButton {
+        padding: rem(24px) 0;
+        background-color: $color-main;
+        color: white;
+        border-radius: 12px;
+        border: none;
+        width: 100%;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+        font-size: rem(20px);
+      }
+      .naverButton {
+        padding: rem(24px) 0;
+        background-color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        color: #00b200;
+        width: 100%;
+        box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
+        font-size: rem(20px);
+      }
+    }
+  }
+}
