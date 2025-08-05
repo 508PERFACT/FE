@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChatBotPage } from './page/ChatBotPage';
 import { Layout } from './components/Layout';
 import { MyPage } from './page/MyPage';
+import { MyReports } from './page/MyReports';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/chatbot" element={<ChatBotPage />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/myreports" element={<MyReports />} />
         </Route>
       </Routes>
     </BrowserRouter>
