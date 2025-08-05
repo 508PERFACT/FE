@@ -17,3 +17,7 @@ $color-sub: #424145;
   flex-direction: $direction;
   gap: $gap;
 }
+
+@function rem($size) {
+  @return calc($size / 16px * 1rem);
+}
