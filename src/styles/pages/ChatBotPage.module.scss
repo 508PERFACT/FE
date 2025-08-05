@@ -2,8 +2,8 @@
 
 .container {
   @include flex(column, $justify-content: flex-start, $gap: 114px);
-  padding-top: calc(114px + 102px);
   .introContent {
+    margin-top: calc(114px + 102px);
     @include flex(column);
     width: min(1264px, 80vw);
     height: min(424px, 80vh);
@@ -42,10 +42,12 @@
   }
 
   .chatInput {
-    @include flex(column);
+    @include flex(column, $justify-content: flex-start);
     width: 100%;
     position: fixed;
-    bottom: 116px;
+    padding-bottom: 116px;
+    bottom: 0px;
+    background: linear-gradient(rgba(0, 0, 0, 0), white 90%);
     .suggestedTitle {
       font-size: rem(18px);
       color: $color-main;
@@ -78,6 +80,8 @@
       padding: 10px 30px;
       margin-top: 43px;
       border-radius: 32px;
+      background-color: white;
+
       .chatInputText {
         font-size: rem(30px);
         border: none;
@@ -102,6 +106,25 @@
           cursor: pointer;
         }
       }
+    }
+  }
+
+  .mainWrapper {
+    @include flex($align-items: flex-start);
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    .mainChatContent {
+      @include flex(
+        column,
+        $gap: 44px,
+        $align-items: flex-end,
+        $justify-content: flex-start
+      );
+      margin-top: calc(184px);
+      width: min(calc(1920px - 1040px), 80vw);
+      padding-bottom: 300px;
+      overflow-y: auto;
     }
   }
 }
