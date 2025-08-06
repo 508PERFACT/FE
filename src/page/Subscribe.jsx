@@ -8,40 +8,42 @@ export const Subscribe = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.modalWrapper}>
-        <div className={styles.modalContent}>
-          {modalType === 'unSubscribe' && (
-            <>
-              <div className={styles.modalDesc}>
-                <span className={styles.modalTitle}>
-                  <span>구독</span>을 정말로 해지하시나요?
-                </span>
-                <img src={logo_modal} alt="logo" />
-                <div className={styles.modalCaption}>
-                  구독을 해지하면 더 이상 혜택을 누릴 수 없어요ㅠㅠ
+      {(modalType === 'unSubscribe' || modalType === 'complate') && (
+        <div className={styles.modalWrapper}>
+          <div className={styles.modalContent}>
+            {modalType === 'unSubscribe' && (
+              <>
+                <div className={styles.modalDesc}>
+                  <span className={styles.modalTitle}>
+                    <span>구독</span>을 정말로 해지하시나요?
+                  </span>
+                  <img src={logo_modal} alt="logo" />
+                  <div className={styles.modalCaption}>
+                    구독을 해지하면 더 이상 혜택을 누릴 수 없어요ㅠㅠ
+                  </div>
                 </div>
-              </div>
-              <div className={styles.modalButtonWrapper}>
-                <div className={styles.cancelButton}>취소</div>
-                <div className={styles.confirmButton}>확인</div>
-              </div>
-            </>
-          )}
-          {modalType === 'complate' && (
-            <>
-              <div className={styles.modalDesc}>
-                <span className={styles.modalTitle}>해지완료</span>
-                <div className={styles.modalCaption}>
-                  유료 구독 플랜이 해지되었습니다.
+                <div className={styles.modalButtonWrapper}>
+                  <div className={styles.cancelButton}>취소</div>
+                  <div className={styles.confirmButton}>확인</div>
                 </div>
-              </div>
-              <div className={styles.modalButtonWrapper}>
-                <div className={styles.confirmButton}>확인</div>
-              </div>
-            </>
-          )}
+              </>
+            )}
+            {modalType === 'complate' && (
+              <>
+                <div className={styles.modalDesc}>
+                  <span className={styles.modalTitle}>해지완료</span>
+                  <div className={styles.modalCaption}>
+                    유료 구독 플랜이 해지되었습니다.
+                  </div>
+                </div>
+                <div className={styles.modalButtonWrapper}>
+                  <div className={styles.confirmButton}>확인</div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className={styles.title}>
         <img src={star_sub_blue} alt="" />
