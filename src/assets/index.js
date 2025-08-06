@@ -6,6 +6,7 @@ import star_sub_blue from './star-sub-icon-blue.svg';
 import report_white from './report-icon-white.svg';
 import report_blue from './report-icon-blue.svg';
 import arrow_right from './arrow-right.svg';
+import logo_modal from './logo-modal.svg';
 
 export {
   logo_title,
@@ -16,4 +17,5 @@ export {
   report_white,
   report_blue,
   arrow_right,
+  logo_modal,
 };
