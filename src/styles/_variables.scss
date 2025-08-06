@@ -21,3 +21,11 @@ $color-sub: #424145;
 @function rem($size) {
   @return calc($size / 16px * 1rem);
 }
+
+@function vw($size) {
+  @return calc($size / 1920px * 100vw);
+}
+
+@function vh($size) {
+  @return calc($size / 1080px * 100vh);
+}

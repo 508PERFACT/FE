@@ -1,0 +1,77 @@
+@use '../variables' as *;
+
+.container {
+  @include flex(column, $justify-content: flex-start, $gap: vh(40px));
+  padding-top: vh(114px + 82px);
+  .title {
+    @include flex($gap: vw(10px));
+    span {
+      font-size: rem(22px);
+      font-weight: 500;
+      color: $color-sub;
+    }
+  }
+
+  .content {
+    @include flex(column, $align-items: flex-start);
+    width: vw(1264px);
+    background-color: white;
+    padding: vw(49px) vw(82px) 0 vw(82px);
+    .listItem {
+      @include flex($justify-content: space-between, $gap: vw(42px));
+      width: vw(1100px);
+      padding: vw(24px) vw(84px);
+      border-bottom: 2px dashed #cccccc;
+      &:last-child {
+        border-bottom: none;
+      }
+      .listLeft {
+        @include flex($justify-content: space-between, $gap: vw(42px));
+        .date {
+          min-width: 174px;
+          padding: 10px 21.5px;
+          background-color: $color-main;
+          color: white;
+          font-size: rem(20px);
+          border-radius: 12px;
+        }
+        .listTitle {
+          font-size: rem(22px);
+          color: $color-sub;
+        }
+      }
+    }
+  }
+
+  .PageNav {
+    @include flex();
+    position: relative;
+
+    .prevButton,
+    .nextButton {
+      position: absolute;
+      top: 30%;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .prevButton {
+      transform: scaleX(-1);
+      left: -40px;
+    }
+    .nextButton {
+      right: -40px;
+    }
+
+    .currentPage {
+      @include flex();
+      text-align: center;
+      background-color: $color-main;
+      color: white;
+      font-size: rem(22px);
+      width: 46px;
+      height: 46px;
+      border-radius: 100px;
+    }
+  }
+}
