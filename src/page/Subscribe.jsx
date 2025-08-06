@@ -4,7 +4,7 @@ import { logo_modal, star_sub_blue } from '@/assets';
 
 export const Subscribe = () => {
   const [isSubscribe, setIsSubscribe] = useState(false);
-  const [modalType, setModalType] = useState('complate');
+  const [modalType, setModalType] = useState('close');
 
   return (
     <div className={styles.container}>
@@ -23,8 +23,21 @@ export const Subscribe = () => {
                   </div>
                 </div>
                 <div className={styles.modalButtonWrapper}>
-                  <div className={styles.cancelButton}>취소</div>
-                  <div className={styles.confirmButton}>확인</div>
+                  <div
+                    className={styles.cancelButton}
+                    onClick={() => setModalType('close')}
+                  >
+                    취소
+                  </div>
+                  <div
+                    className={styles.confirmButton}
+                    onClick={() => {
+                      setModalType('complate');
+                      setIsSubscribe(false);
+                    }}
+                  >
+                    확인
+                  </div>
                 </div>
               </>
             )}
@@ -37,7 +50,12 @@ export const Subscribe = () => {
                   </div>
                 </div>
                 <div className={styles.modalButtonWrapper}>
-                  <div className={styles.confirmButton}>확인</div>
+                  <div
+                    className={styles.confirmButton}
+                    onClick={() => setModalType('close')}
+                  >
+                    확인
+                  </div>
                 </div>
               </>
             )}
@@ -80,6 +98,11 @@ export const Subscribe = () => {
       <div className={styles.buttonWrapper}>
         <button
           className={`${styles.button} ${!isSubscribe && styles.isSubscribe}`}
+          onClick={
+            isSubscribe
+              ? () => setModalType('unSubscribe')
+              : () => setIsSubscribe(true)
+          }
         >
           {isSubscribe ? '해지하기' : '유료플랜 구독하기'}
         </button>
