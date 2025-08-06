@@ -1,0 +1,88 @@
+@use '../variables' as *;
+
+.container {
+  @include flex(column, $justify-content: flex-start, $gap: vh(77px));
+  padding-top: vh(204px);
+  width: (1920px - 1140px);
+  .profileContent {
+    width: 100%;
+    position: relative;
+    @include flex(column, $gap: vh(32px));
+    .homeLink {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: $color-sub;
+    }
+
+    .profileLogo {
+      width: vw(126px);
+      height: vw(126px);
+      background-color: #dee7ff;
+      border-radius: 100px;
+      @include flex();
+    }
+
+    .textWrapper {
+      @include flex(column, $gap: vh(16px));
+      .title {
+        font-size: rem(22px);
+        font-weight: 700;
+        span {
+          color: $color-main;
+        }
+      }
+
+      .subTitle {
+        font-size: rem(16px);
+        font-weight: 400;
+        color: #aaaaaa;
+      }
+    }
+  }
+
+  .divider {
+    width: 100%;
+    border-bottom: 2px dashed #949494;
+  }
+  .buttonContent {
+    @include flex($gap: vw(62px));
+    width: 100%;
+    .buttonWrapper {
+      @include flex(column, $align-items: flex-end);
+      background-color: $color-main;
+      color: white;
+      width: 246px;
+      height: 246px;
+      border-radius: 12px;
+      padding: 20px 16px;
+      .buttonTextWrapper {
+        width: 100%;
+        @include flex(column, flex-start, flex-start, 10px);
+        flex: 1 1 0;
+        .buttonTitle {
+          font-size: rem(22px);
+          font-weight: 600;
+        }
+
+        .buttonDesc {
+          font-size: rem(12px);
+          line-height: 1.75;
+        }
+      }
+      .buttonImg {
+        @include flex($align-items: flex-end);
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .logout {
+    margin-top: calc(103px - vh(77px));
+    color: #949494;
+    font-size: rem(22px);
+    text-decoration: underline;
+  }
+}
