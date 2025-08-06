@@ -1,0 +1,130 @@
+@use '../variables' as *;
+
+.container {
+  @include flex(column, $justify-content: flex-start, $gap: 114px);
+  .introContent {
+    margin-top: calc(114px + 102px);
+    @include flex(column);
+    width: min(1264px, 80vw);
+    height: min(424px, 80vh);
+    padding: 62px 0px 106px 0px;
+    background-color: white;
+    .title {
+      color: $color-sub;
+      font-size: rem(30px);
+      padding-bottom: 80px;
+    }
+    .introBubble {
+      width: min(100%, 353px);
+      height: min(100%, 61px);
+      background-color: #dbf1ff;
+      border-radius: 22px 22px 0px 22px;
+      position: relative;
+      transform: translateX(110px);
+      &:last-child {
+        width: min(100%, 440px);
+        margin-top: 20px;
+        transform: translateX(-60px) scaleX(-1);
+      }
+
+      &::after {
+        content: '';
+        width: 0px;
+        height: 0px;
+        border-bottom: 20px solid #dbf1ff;
+        border-left: 0px solid transparent;
+        border-right: 20px solid transparent;
+        position: absolute;
+        bottom: 0;
+        right: -19px;
+      }
+    }
+  }
+
+  .chatInput {
+    @include flex(column, $justify-content: flex-start);
+    width: 100%;
+    position: fixed;
+    padding-bottom: 116px;
+    bottom: 0px;
+    background: linear-gradient(rgba(0, 0, 0, 0), white 90%);
+    .suggestedTitle {
+      font-size: rem(18px);
+      color: $color-main;
+      margin-bottom: 28px;
+    }
+    .suggestedContent {
+      @include flex($gap: 45px);
+
+      .suggestedButton {
+        border: none;
+        background-color: $color-main;
+        border-radius: 45px;
+        min-width: min(373px, 40vw);
+        padding: 10px 0;
+        span {
+          color: white;
+          font-size: rem(22px);
+          font-weight: 400;
+        }
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .chatInputForm {
+      @include flex($justify-content: space-between);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      width: min(95vw, 924px);
+      padding: 10px 30px;
+      margin-top: 43px;
+      border-radius: 32px;
+      background-color: white;
+
+      .chatInputText {
+        font-size: rem(30px);
+        border: none;
+        width: 100%;
+        &::placeholder {
+          font-weight: 500;
+          color: #cccccc;
+        }
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+      }
+      .chatSendButton {
+        background-color: $color-main;
+        min-width: 50px;
+        min-height: 50px;
+        border: none;
+        border-radius: 50px;
+        color: white;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .mainWrapper {
+    @include flex($align-items: flex-start);
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    .mainChatContent {
+      @include flex(
+        column,
+        $gap: 44px,
+        $align-items: flex-end,
+        $justify-content: flex-start
+      );
+      margin-top: calc(184px);
+      width: min(calc(1920px - 1040px), 95vw);
+      padding-bottom: 300px;
+      overflow-y: auto;
+    }
+  }
+}
