@@ -6,7 +6,7 @@ import { MyPage } from './page/MyPage';
 import { MyReports } from './page/MyReports';
 import { Subscribe } from './page/Subscribe';
 import { Report } from './page/Report';
-import { AlterNative } from './page/alternative';
+import { AlterNative } from './page/AlterNative';
 
 function App() {
   return (
