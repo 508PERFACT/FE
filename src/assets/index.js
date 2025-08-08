@@ -7,6 +7,9 @@ import report_white from './report-icon-white.svg';
 import report_blue from './report-icon-blue.svg';
 import arrow_right from './arrow-right.svg';
 import logo_modal from './logo-modal.svg';
+import credit_icon from './credit-icon.svg';
+import enter_icon from './enter-icon.svg';
+import credit_deduct_icon from './credit-deduct-icon.svg';
 import signature from './signature.svg';
 
 export {
@@ -19,5 +22,8 @@ export {
   report_blue,
   arrow_right,
   logo_modal,
+  credit_icon,
+  enter_icon,
+  credit_deduct_icon,
   signature,
 };
