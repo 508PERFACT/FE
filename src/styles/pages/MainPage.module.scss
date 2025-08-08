@@ -1,0 +1,64 @@
+@use '../variables' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  margin-top: calc(114px + 312px);
+  .content {
+    @include flex(
+      row,
+      $justify-content: center,
+      $align-items: center,
+      $gap: vw(207px)
+    );
+    margin-bottom: vh(47px);
+    .title {
+      font-size: rem(30px);
+      font-weight: 400;
+      color: #141319;
+    }
+    .creditsWrapper {
+      @include flex(
+        row,
+        $justify-content: center,
+        $align-items: center,
+        $gap: vw(8px)
+      );
+      .credits {
+        font-size: rem(30px);
+        font-weight: 500;
+        color: $color-main;
+      }
+    }
+  }
+  .inputWrapper {
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 32px;
+    width: vw(924px);
+    padding: vh(18px) vw(28px);
+    @include flex(
+      row,
+      $justify-content: center,
+      $align-items: center,
+      $gap: vw(126px)
+    );
+    .inputContent {
+      width: 100%;
+      min-height: vh(36px);
+      border: none;
+      background-color: transparent;
+      margin-left: vw(16px);
+      font-size: rem(30px);
+      color: #424242;
+      resize: none;
+      overflow-y: hidden;
+      line-height: 1;
+      &::placeholder {
+        font-weight: 500;
+        color: #cccccc;
+      }
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { Login } from './page/Login';
 import { MyPage } from './page/MyPage';
 import { MyReports } from './page/MyReports';
 import { Subscribe } from './page/Subscribe';
+import { MainPage } from './page/MainPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/myreports" element={<MyReports />} />
           <Route path="/subscribe" element={<Subscribe />} />
+          <Route path="/" element={<MainPage />} />
         </Route>
         <Route>
           <Route path="/login" element={<Login />} />
