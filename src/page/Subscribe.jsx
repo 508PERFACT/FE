@@ -9,58 +9,11 @@ export const Subscribe = () => {
   return (
     <div className={styles.container}>
       {(modalType === 'unSubscribe' || modalType === 'complate') && (
-        <div className={styles.modalWrapper}>
-          <div className={styles.modalContent}>
-            {modalType === 'unSubscribe' && (
-              <>
-                <div className={styles.modalDesc}>
-                  <span className={styles.modalTitle}>
-                    <span>구독</span>을 정말로 해지하시나요?
-                  </span>
-                  <img src={logo_modal} alt="logo" />
-                  <div className={styles.modalCaption}>
-                    구독을 해지하면 더 이상 혜택을 누릴 수 없어요ㅠㅠ
-                  </div>
-                </div>
-                <div className={styles.modalButtonWrapper}>
-                  <div
-                    className={styles.cancelButton}
-                    onClick={() => setModalType('close')}
-                  >
-                    취소
-                  </div>
-                  <div
-                    className={styles.confirmButton}
-                    onClick={() => {
-                      setModalType('complate');
-                      setIsSubscribe(false);
-                    }}
-                  >
-                    확인
-                  </div>
-                </div>
-              </>
-            )}
-            {modalType === 'complate' && (
-              <>
-                <div className={styles.modalDesc}>
-                  <span className={styles.modalTitle}>해지완료</span>
-                  <div className={styles.modalCaption}>
-                    유료 구독 플랜이 해지되었습니다.
-                  </div>
-                </div>
-                <div className={styles.modalButtonWrapper}>
-                  <div
-                    className={styles.confirmButton}
-                    onClick={() => setModalType('close')}
-                  >
-                    확인
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+        <SubscribeModal
+          modalType={modalType}
+          setModalType={setModalType}
+          setIsSubscribe={setIsSubscribe}
+        />
       )}
 
       <div className={styles.title}>
@@ -111,6 +64,63 @@ export const Subscribe = () => {
             ? '해지하면 혜택을 더 이상 누릴 수 없어요.'
             : '더 많은 크레딧과 광고 없는 퍼펙트를 즐겨봐요!'}
         </div>
+      </div>
+    </div>
+  );
+};
+
+const SubscribeModal = ({ modalType, setModalType, setIsSubscribe }) => {
+  return (
+    <div className={styles.modalWrapper}>
+      <div className={styles.modalContent}>
+        {modalType === 'unSubscribe' && (
+          <>
+            <div className={styles.modalDesc}>
+              <span className={styles.modalTitle}>
+                <span>구독</span>을 정말로 해지하시나요?
+              </span>
+              <img src={logo_modal} alt="logo" />
+              <div className={styles.modalCaption}>
+                구독을 해지하면 더 이상 혜택을 누릴 수 없어요ㅠㅠ
+              </div>
+            </div>
+            <div className={styles.modalButtonWrapper}>
+              <div
+                className={styles.cancelButton}
+                onClick={() => setModalType('close')}
+              >
+                취소
+              </div>
+              <div
+                className={styles.confirmButton}
+                onClick={() => {
+                  setModalType('complate');
+                  setIsSubscribe(false);
+                }}
+              >
+                확인
+              </div>
+            </div>
+          </>
+        )}
+        {modalType === 'complate' && (
+          <>
+            <div className={styles.modalDesc}>
+              <span className={styles.modalTitle}>해지완료</span>
+              <div className={styles.modalCaption}>
+                유료 구독 플랜이 해지되었습니다.
+              </div>
+            </div>
+            <div className={styles.modalButtonWrapper}>
+              <div
+                className={styles.confirmButton}
+                onClick={() => setModalType('close')}
+              >
+                확인
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
