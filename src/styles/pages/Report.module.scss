@@ -170,16 +170,6 @@
   }
 }
 
-@mixin label($background) {
-  @include flex();
-  color: white;
-  font-size: rem(24px);
-  max-width: 170px;
-  width: 100%;
-  padding: 10px;
-  background: $background;
-}
-
 .labelGray {
   @include label(#aaa);
 }
