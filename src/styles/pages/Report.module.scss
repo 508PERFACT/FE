@@ -1,0 +1,189 @@
+@use '../variables' as *;
+
+.container {
+  @include flex(column, $justify-content: flex-start);
+  padding-top: vh(114px + 82px);
+
+  .content {
+    @include flex(column);
+    width: vw(1264px);
+    background-color: white;
+    padding: 0 vw(82px);
+    .topSection {
+      @include flex(column);
+      padding: vh(41px) vw(21px) vh(32px) vw(21px);
+      width: 100%;
+      border-bottom: 2px dashed #ccc;
+      .caption {
+        color: #aaa;
+        font-size: rem(24px);
+        font-weight: 500;
+        margin-bottom: vh(14px);
+      }
+
+      .titleBox {
+        @include flex($justify-content: space-between);
+        width: 100%;
+        a {
+          @include flex();
+          width: 100%;
+          height: 100%;
+          max-width: 245px;
+          max-height: 44px;
+          padding: 10px;
+          border-radius: 12px;
+          background: var(--1, #3a68ff);
+          color: white;
+          text-decoration: none;
+          font-size: rem(20px);
+        }
+        .headerTitle {
+          color: #141319;
+          font-size: rem(30px);
+          font-weight: 700;
+        }
+      }
+      .newsContent {
+        @include flex(column, $gap: vh(38px));
+        margin-top: vh(45px - 14px);
+        width: 100%;
+        .sectionRow {
+          @include flex($justify-content: flex-start, $gap: vw(70px));
+          width: 100%;
+          a,
+          span {
+            color: #141319;
+            font-size: rem(24px);
+            font-weight: 500;
+          }
+          a {
+            text-decoration: none;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+    .section {
+      @include flex(row, flex-start, flex-start, vw(64px));
+      padding: vh(63px) vw(23px);
+      width: 100%;
+      border-bottom: 2px dashed #ccc;
+      &:last-child {
+        border-bottom: none;
+      }
+      .summary {
+        @include flex(column, flex-start, flex-start);
+        width: 100%;
+        color: #141319;
+        font-size: rem(24px);
+        font-weight: 500;
+        line-height: 175%; /* 42px */
+      }
+
+      table {
+        width: 100%;
+        font-size: rem(19px);
+        text-align: left;
+        border-collapse: collapse;
+        thead {
+          background: #dbf1ff;
+          tr {
+            margin-bottom: 30px;
+            th {
+              color: #141319;
+              font-style: normal;
+              font-weight: 500;
+              line-height: 175%; /* 33.25px */
+              padding: vh(8px) vw(35px);
+              border-bottom: 12px solid transparent;
+            }
+          }
+        }
+
+        tbody {
+          tr {
+            td {
+              padding: 0 vw(35px);
+              color: #949494;
+              font-weight: 500;
+              line-height: 305%; /* 57.95px */
+            }
+          }
+        }
+      }
+
+      .scoreBadge {
+        @include flex(column, $gap: vh(40px));
+        width: 100%;
+
+        .sectionRow {
+          @include flex($justify-content: flex-start, $gap: vw(70px));
+          width: 100%;
+          .score {
+            color: #141319;
+            font-size: rem(24px);
+            font-weight: 500;
+            line-height: 175%; /* 42px */
+            span {
+              color: #00b200;
+              font-size: rem(30px);
+              font-weight: 700;
+            }
+          }
+
+          .badges {
+            @include flex($gap: vw(12px));
+            .badge {
+              padding: 10px;
+              border-radius: 12px;
+              background: #dbf1ff;
+              color: #141319;
+              font-size: rem(24px);
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+  }
+  .result {
+    @include flex();
+    padding-top: vh(16px);
+    padding-bottom: 100px;
+    max-width: 700px;
+    span {
+      color: #3a68ff;
+      font-size: rem(43.333px);
+      font-weight: 700;
+      position: relative;
+
+      img {
+        position: absolute;
+        top: 50%;
+        right: -100px;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}
+
+@mixin label($background) {
+  @include flex();
+  color: white;
+  font-size: rem(24px);
+  max-width: 170px;
+  width: 100%;
+  padding: 10px;
+  background: $background;
+}
+
+.labelGray {
+  @include label(#aaa);
+}
+
+.labelBlue {
+  @include label($color-main);
+}
