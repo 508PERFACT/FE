@@ -19,7 +19,7 @@ function App() {
           <Route path="/report/:id/alternative" element={<AlterNative />} />
           <Route path="/chatbot" element={<ChatBotPage />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/myreports" element={<MyReports />} />
+          <Route path="/myreports/:id" element={<MyReports />} />
           <Route path="/subscribe" element={<Subscribe />} />
           <Route path="/" element={<MainPage />} />
         </Route>
