@@ -16,6 +16,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/report" element={<Report />} />
+          <Route path="/report/:id" element={<Report />} />
           <Route path="/report/:id/alternative" element={<AlterNative />} />
           <Route path="/chatbot" element={<ChatBotPage />} />
           <Route path="/mypage" element={<MyPage />} />
