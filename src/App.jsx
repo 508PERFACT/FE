@@ -6,6 +6,7 @@ import { MyPage } from './page/MyPage';
 import { MyReports } from './page/MyReports';
 import { Subscribe } from './page/Subscribe';
 import { Report } from './page/Report';
+import { AlterNative } from './page/alternative';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/report" element={<Report />} />
+          <Route path="/report/:id/alternative" element={<AlterNative />} />
           <Route path="/chatbot" element={<ChatBotPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/myreports" element={<MyReports />} />
