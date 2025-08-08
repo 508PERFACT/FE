@@ -38,6 +38,14 @@
         .listTitle {
           font-size: rem(22px);
           color: $color-sub;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+      img {
+        &:hover {
+          cursor: pointer;
         }
       }
     }
