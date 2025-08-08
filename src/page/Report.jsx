@@ -1,10 +1,13 @@
 import { signature } from '@/assets';
+import { useHover } from '@/hooks/useHover';
 import styles from '@/styles/pages/Report.module.scss';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export const Report = () => {
   const [reportData, setReportData] = useState({});
+  const alterNewsHover = useHover();
+  const chatbotHover = useHover();
 
   useEffect(() => {
     setReportData(mockNewsReports);
@@ -20,9 +23,39 @@ export const Report = () => {
         <div className={styles.topSection}>
           <span className={styles.caption}>퍼팩트가 분석한 결과는요?</span>
           <div className={styles.titleBox}>
-            <Link to={'/'}>다른 시각의 기사보기</Link>
+            <div ref={alterNewsHover.nodeRef} className={styles.linkButton}>
+              다른 시각의 기사보기
+              <div
+                className={`${styles.hoverCaption} ${styles.alterNewsCaption}`}
+                style={{
+                  opacity: alterNewsHover.isHovering ? 1 : 0,
+                  visibility: alterNewsHover.isHovering ? 'visible' : 'hidden',
+                }}
+              >
+                사용자가 보고 있던 주제에 대해 상반된 입장을 가진 기사들을
+                비교하며,
+                <br />
+                정보 편향 없이 스스로 판단할 수 있도록 돕는 기능
+              </div>
+            </div>
             <div className={styles.headerTitle}>💡[AI 통합 리포트]</div>
-            <Link to={`/chatbot/${reportData.reportId}`}>AI 설명 챗봇</Link>
+            <Link
+              ref={chatbotHover.nodeRef}
+              to={`/chatbot/${reportData.reportId}`}
+              className={styles.linkButton}
+            >
+              AI 설명 챗봇
+              <div
+                className={`${styles.hoverCaption} ${styles.chatbotCaption}`}
+                style={{
+                  opacity: chatbotHover.isHovering ? 1 : 0,
+                  visibility: chatbotHover.isHovering ? 'visible' : 'hidden',
+                }}
+              >
+                신뢰도 리포트를 본 후 생기는 의문을 AI에게 후속 질문하면 <br />
+                사람의 언어로 쉽게 풀어 설명을 해주는 기능
+              </div>
+            </Link>
           </div>
         </div>
         <div className={styles.topSection}>
@@ -114,8 +147,7 @@ export const Report = () => {
       </div>
       <div className={styles.result}>
         <span>
-          "객관적이며 신뢰할 수 있는 기사입니다." "객관적이며 신뢰할 수 있는
-          기사입니다."
+          "객관적이며 신뢰할 수 있는 기사입니다."
           <img src={signature} alt="sign" />
         </span>
       </div>
