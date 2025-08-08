@@ -29,3 +29,13 @@ $color-sub: #424145;
 @function vh($size) {
   @return calc($size / 1080px * 100vh);
 }
+
+@mixin label($background) {
+  @include flex();
+  color: white;
+  font-size: rem(24px);
+  max-width: 170px;
+  width: 100%;
+  padding: 10px;
+  background: $background;
+}
