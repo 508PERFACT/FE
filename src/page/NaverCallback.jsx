@@ -35,8 +35,8 @@ export const NaverCallback = () => {
         console.log(data);
 
         // 토큰 저장
-        if (data?.accessToken) {
-          localStorage.setItem('access_token', data.accessToken);
+        if (data?.result.accessToken) {
+          localStorage.setItem('access_token', data.result.accessToken);
         }
 
         // 홈으로 이동
