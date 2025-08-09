@@ -21,15 +21,16 @@
     font-size: rem(22px);
     table {
       width: vw(732px);
-      border-spacing: 0;
+      border-collapse: collapse;
       thead {
         background-color: $color-main;
-        td {
+        th {
+          text-align: left;
           padding: 9px 20px;
           color: white;
         }
       }
-      tr {
+      tbody {
         td {
           padding: 21px 20px;
           color: $color-sub;
