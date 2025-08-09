@@ -6,9 +6,9 @@ export const CreditModal = ({
   modalType,
   setModalType,
   onConfirm,
-  errTitleRed = '링크(URL) ',
-  errTitle = '오류입니다.',
-  errCaption = '올바른 링크를 입력해주세요.',
+  errTitleRed,
+  errTitle,
+  errCaption,
 }) => {
   const handleConfirm = () => {
     if (typeof onConfirm === 'function') {

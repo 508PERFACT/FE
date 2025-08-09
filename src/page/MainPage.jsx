@@ -10,9 +10,9 @@ export const MainPage = () => {
   const [inputUrl, setInputUrl] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [dailyCredit, setDailyCredit] = useState(0);
-  const [errTitleRed, setErrTitleRed] = useState('');
-  const [errTitle, setErrTitle] = useState('');
-  const [errCaption, setErrCaption] = useState('');
+  const [errTitleRed, setErrTitleRed] = useState('링크(URL) ');
+  const [errTitle, setErrTitle] = useState('오류입니다.');
+  const [errCaption, setErrCaption] = useState('올바른 링크를 입력해주세요.');
   useEffect(() => {
     const getSubscribe = async () => {
       try {
