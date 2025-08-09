@@ -1,11 +1,20 @@
 import styles from '@/styles/components/CreditModal.module.scss';
 import { credit_deduct_icon } from '@/assets';
+import api from '@/apis/axiosInstance';
 
-export const CreditNoticetModal = ({
-  modalType,
-  setModalType,
-  setIsSubscribe,
-}) => {
+export const CreditModal = ({ modalType, setModalType, inputUrl }) => {
+  const handleButtonClick = () => {
+    const fetchData = async () => {
+      const url = inputUrl.trim();
+      if (!url) return;
+      const res = await api.post('/report', {
+        url,
+      });
+      console.log(res);
+    };
+    fetchData();
+    setModalType('complate');
+  };
   return (
     <div className={styles.modalWrapper}>
       <div className={styles.modalContent}>
@@ -24,13 +33,7 @@ export const CreditNoticetModal = ({
               >
                 취소
               </div>
-              <div
-                className={styles.confirmButton}
-                onClick={() => {
-                  setModalType('complate');
-                  setIsSubscribe(false);
-                }}
-              >
+              <div className={styles.confirmButton} onClick={handleButtonClick}>
                 확인
               </div>
             </div>
