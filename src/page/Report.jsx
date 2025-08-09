@@ -36,12 +36,17 @@ export const Report = () => {
   const handleAlterNative = async () => {
     setModalType('loading');
     try {
-      const res = await api.get(`/report/${id}/alternative`);
-      if (res.data.isSuccess) {
-        console.log();
-        navigate(`/report/${id}/alternative`, { result: res });
-        setModalType('close');
-      }
+      // const res = await api.get(`/report/${id}/alternative`);
+      // if (res.data.isSuccess) {
+      navigate(`/report/${id}/alternative`, {
+        state: {
+          res: mockAlterNewsReports.result, // todo 통신 시 삭제
+          overallScore: reportData.trueScore.overallScore,
+          reliability,
+        },
+      });
+      setModalType('close');
+      // }
     } catch (error) {
       console.error(error);
       setModalType('false');
@@ -234,6 +239,42 @@ export const Report = () => {
   );
 };
 
+const reliabilityMessages = [
+  {
+    min: 80,
+    max: 100,
+    message: '✅ 신뢰도 높음',
+    result: '“객관적이며 신뢰할 수 있는 기사입니다.”',
+    color: '#00B200',
+  },
+  {
+    min: 60,
+    max: 79,
+    message: '🟨 신뢰도 보통',
+    result:
+      '“기본적인 정보는 신뢰할 수 있으나, 일부 내용은 추가 확인이 필요합니다.”',
+    color: '#EFB600',
+  },
+  {
+    min: 40,
+    max: 59,
+    message: '🟨 신뢰도 보통',
+    result:
+      '“과장되거나 근거가 부족한 내용이 포함되어 있어 주의가 필요합니다.”',
+    color: '#EFB600',
+  },
+  {
+    min: 0,
+    max: 39,
+    message: '⛔ 신뢰도 매우 낮음',
+    result: '“신뢰할 수 없는 정보 또는 광고성·왜곡 가능성이 높은 기사입니다.”',
+    color: '#EF0000',
+  },
+];
+
+const getReliabilityMessage = (score) =>
+  reliabilityMessages.find(({ min, max }) => score >= min && score <= max);
+
 const mockNewsReports = {
   reportId: 1,
   title: '"더워도 에어컨 켜지 마세요" 경고…노후 아파트 무슨 일',
@@ -275,38 +316,59 @@ const mockNewsReports = {
   updatedAt: '2025-08-07T20:20:58.994Z',
 };
 
-const reliabilityMessages = [
-  {
-    min: 80,
-    max: 100,
-    message: '✅ 신뢰도 높음',
-    result: '“객관적이며 신뢰할 수 있는 기사입니다.”',
-    color: '#00B200',
-  },
-  {
-    min: 60,
-    max: 79,
-    message: '🟨 신뢰도 보통',
+const mockAlterNewsReports = {
+  isSuccess: true,
+  code: 'COMMON2000',
+  message: '성공입니다.',
+  result: {
+    alternativeArticleId: 1,
+    title: "위고비, 실제로는 체중 감량 효과 미미... 전문가들 '회의적'",
+    url: 'https://example.com/opposing-article',
+    publicationDate: '2024-01-15',
+    summary:
+      '위고비의 체중 감량 효과에 대해 전문가들이 회의적인 시각을 보이고 있다.',
     result:
-      '“기본적인 정보는 신뢰할 수 있으나, 일부 내용은 추가 확인이 필요합니다.”',
-    color: '#EFB600',
+      '위고비의 체중 감량 효과는 제한적이며, 전문가들은 장기적인 효과에 대해 의문을 제기한다.',
+    contentComparisons: [
+      {
+        title: '강조점',
+        article: '위고비의 체중 감량 효과를 강조',
+        altArticle: '위고비의 효과에 대한 회의적 시각 제시',
+      },
+      {
+        title: '접근 방식',
+        article: '긍정적인 사용자 경험 중심',
+        altArticle: '전문가 의견과 연구 결과 중심',
+      },
+      {
+        title: '톤',
+        article: '낙관적이고 긍정적',
+        altArticle: '객관적이고 회의적',
+      },
+      {
+        title: '의도',
+        article: '제품의 효과 홍보',
+        altArticle: '객관적 사실 전달',
+      },
+    ],
+    perspectiveComparisons: [
+      {
+        title: '감량 효과',
+        article: '상당한 체중 감량 효과 강조',
+        altArticle: '제한적이고 일시적인 효과 설명',
+      },
+      {
+        title: '부작용 강조',
+        article: '부작용을 최소화하여 표현',
+        altArticle: '잠재적 부작용에 대한 경고',
+      },
+      {
+        title: '주요 인용 대상',
+        article: '사용자 후기와 체험담 중심',
+        altArticle: '의료 전문가와 연구자 의견 중심',
+      },
+    ],
+    aiConclusion:
+      '위고비에 대한 두 기사의 접근 방식이 크게 다르다. 원본 기사는 사용자 경험과 긍정적 효과를 강조하는 반면, 대안 기사는 전문가 의견과 객관적 연구 결과를 바탕으로 한 회의적 시각을 제시한다. 소비자는 두 관점을 모두 고려하여 개인적인 상황과 건강 상태에 맞는 판단을 내리는 것이 중요하다.',
   },
-  {
-    min: 40,
-    max: 59,
-    message: '🟨 신뢰도 보통',
-    result:
-      '“과장되거나 근거가 부족한 내용이 포함되어 있어 주의가 필요합니다.”',
-    color: '#EFB600',
-  },
-  {
-    min: 0,
-    max: 39,
-    message: '⛔ 신뢰도 매우 낮음',
-    result: '“신뢰할 수 없는 정보 또는 광고성·왜곡 가능성이 높은 기사입니다.”',
-    color: '#EF0000',
-  },
-];
-
-const getReliabilityMessage = (score) =>
-  reliabilityMessages.find(({ min, max }) => score >= min && score <= max);
+};
