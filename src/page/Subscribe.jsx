@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '@/styles/pages/Subscribe.module.scss';
 import { logo_modal, star_sub_blue } from '@/assets';
+import api from '@/apis/axiosInstance';
 
 export const Subscribe = () => {
   const [isSubscribe, setIsSubscribe] = useState(false);
   const [modalType, setModalType] = useState('close');
+  const [subscribeData, setSubscribeData] = useState({});
+
+  useEffect(() => {
+    const getSubscribe = async () => {
+      try {
+        // const res = await api.get('users/subscribe');
+        // if (res.isSuccess === true)
+        // setSubscribeData(res.data.result);
+        setSubscribeData(mockSubscription.result);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getSubscribe();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -28,23 +44,23 @@ export const Subscribe = () => {
           </thead>
           <tr>
             <td>플랜 이름</td>
-            <td>{`Free`}</td>
+            <td>{subscribeData.planName}</td>
           </tr>
           <tr>
             <td>구독 상태</td>
-            <td>{`무료 플랜 사용중`}</td>
+            <td>{subscribeData.subscribeStatus}</td>
           </tr>
           <tr>
             <td>다음 결제일</td>
-            <td>{`무료 플랜 사용중`}</td>
+            <td>{subscribeData.nextBillingDate}</td>
           </tr>
           <tr>
             <td>일간 크레딧 제공량</td>
-            <td>{`3`}건</td>
+            <td>{subscribeData.dailyCredit}건</td>
           </tr>
           <tr>
             <td>이번 달 사용량</td>
-            <td>{`2`}건 사용됨</td>
+            <td>{subscribeData.thisMonthUsage}건 사용됨</td>
           </tr>
         </table>
       </div>
@@ -124,4 +140,18 @@ const SubscribeModal = ({ modalType, setModalType, setIsSubscribe }) => {
       </div>
     </div>
   );
+};
+
+const mockSubscription = {
+  isSuccess: true,
+  code: 'USER2002',
+  message: '구독 상태 조회 성공',
+  result: {
+    planName: 'FREE',
+    subscribeStatus: '무료 플랜 사용 중',
+    nextBillingDate: '무료 플랜 사용 중',
+    dailyCredit: 3,
+    todayUsage: 1,
+    thisMonthUsage: 1,
+  },
 };
