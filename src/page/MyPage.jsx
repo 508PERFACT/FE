@@ -2,16 +2,31 @@ import React, { useState } from 'react';
 import styles from '@/styles/pages/MyPage.module.scss';
 import { logo_header, report_white, star_sub_white } from '@/assets';
 import { Link, useNavigate } from 'react-router-dom';
+import api from '@/apis/axiosInstance';
 
 export const MyPage = () => {
   const navigate = useNavigate();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
-  const handleLogout = () => {
-    console.log('logout');
-    setIsLogoutModalOpen(false);
-    navigate('/login');
+  const handleLogout = async () => {
+    const refreshToken = localStorage.getItem('refresh_token');
+    try {
+      const res = await api.post('auth/logout', {
+        refreshToken: refreshToken,
+      });
+      if (res.data.isSuccess == false) throw new Error(res.data.message);
+
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      navigate('/login');
+    } catch (error) {
+      console.error(error);
+      alert(error.message || '로그아웃에 실패했습니다.');
+    } finally {
+      setIsLogoutModalOpen(false);
+    }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.profileContent}>
