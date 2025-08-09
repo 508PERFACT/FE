@@ -13,9 +13,8 @@ export const MyReports = () => {
   useEffect(() => {
     const getReportsList = async () => {
       try {
-        // const res = await api.get(`users?page=${currentPage}`);
-        // setList(res.data.result);
-        setPageData(reportsData.result); // 테스트용
+        const res = await api.get(`users?page=${currentPage}`);
+        setPageData(res.data.result);
       } catch (error) {
         console.error(error);
       }
@@ -87,52 +86,4 @@ export const MyReports = () => {
       </div>
     </div>
   );
-};
-
-const reportsData = {
-  isSuccess: true,
-  code: 'SUCCESS',
-  message: '데이터 조회 성공',
-  result: {
-    reports: [
-      {
-        reportId: 1,
-        title:
-          '“소비쿠폰 대신 이거 써유”… 홍성 주민, 난민·외국인에 심시일반 전한 ‘마음’',
-        createdAt: '2025-07-26T12:09:00',
-      },
-      {
-        reportId: 2,
-        title:
-          '[뉴스토리] “정상 체중도 맞는다”…기저의 비만약 ‘위고비’, 오남용 우려도',
-        createdAt: '2025-07-27T13:00:00',
-      },
-      {
-        reportId: 3,
-        title:
-          '휴가철 홍역 환자 “급증”…“예방접종으로 안전한 해외여행 즐기세요”',
-        createdAt: '2025-07-26T16:09:00',
-      },
-      {
-        reportId: 4,
-        title: '고령 운전사고 늘지만 면허증 반납만이 능사아냐',
-        createdAt: '2025-07-26T22:09:00',
-      },
-      {
-        reportId: 5,
-        title:
-          '휴가철 홍역 환자 “급증”…“예방접종으로 안전한 해외여행 즐기세요”',
-        createdAt: '2025-07-26T16:09:00',
-      },
-      {
-        reportId: 6,
-        title: '고령 운전사고 늘지만 면허증 반납만이 능사아냐',
-        createdAt: '2025-07-26T22:09:00',
-      },
-    ],
-    currentPage: 1,
-    totalPages: 3,
-    totalElements: 18,
-    last: false,
-  },
 };
