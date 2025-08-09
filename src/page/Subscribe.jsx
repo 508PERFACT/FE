@@ -11,10 +11,9 @@ export const Subscribe = () => {
   useEffect(() => {
     const getSubscribe = async () => {
       try {
-        // const res = await api.get('users/subscribe');
-        // if (res.isSuccess === true)
-        // setSubscribeData(res.data.result);
-        setSubscribeData(mockSubscription.result);
+        const res = await api.get('users/subscribe');
+        if (res.data.isSuccess) setSubscribeData(res.data.result);
+        // setSubscribeData(mockSubscription.result);
       } catch (error) {
         console.error(error);
       }
@@ -140,18 +139,4 @@ const SubscribeModal = ({ modalType, setModalType, setIsSubscribe }) => {
       </div>
     </div>
   );
-};
-
-const mockSubscription = {
-  isSuccess: true,
-  code: 'USER2002',
-  message: '구독 상태 조회 성공',
-  result: {
-    planName: 'FREE',
-    subscribeStatus: '무료 플랜 사용 중',
-    nextBillingDate: '무료 플랜 사용 중',
-    dailyCredit: 3,
-    todayUsage: 1,
-    thisMonthUsage: 1,
-  },
 };
