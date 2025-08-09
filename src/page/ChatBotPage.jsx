@@ -4,12 +4,38 @@ import { ChatBubble } from '@/components/ChatBubble';
 import { useParams } from 'react-router-dom';
 import { enter_icon } from '@/assets';
 import { useChatData } from '@/hooks/useChatData';
+import api from '@/apis/axiosInstance';
 
 export const ChatBotPage = () => {
   const { id: reportId } = useParams();
   const [isChatStarted, setIsChatStarted] = useState(false);
-  const { messages, recommendQuestions, isLoading, setMessages, addMessage } =
+  const [userInput, setUserInput] = useState('');
+
+  const { messages, recommendQuestions, isLoading, addMessage } =
     useChatData(reportId);
+
+  const handleFormSubmit = async (e, questionText = userInput) => {
+    if (e) e.preventDefault();
+    if (!questionText.trim()) return;
+
+    addMessage('USER', questionText);
+
+    try {
+      const res = await api.post(`report/${reportId}/chat`, {
+        userInput: questionText,
+      });
+      if (res?.data.isSuccess) {
+        const aiMessage = res.data.result.aiResponse;
+        addMessage('AI', aiMessage);
+      }
+    } catch (error) {
+      console.error(error);
+      addMessage('AI', '죄송합니다. 메시지를 처리하는 중 오류가 발생했습니다.');
+    } finally {
+      setUserInput('');
+      setIsChatStarted(true);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -41,7 +67,11 @@ export const ChatBotPage = () => {
             <span className={styles.suggestedTitle}>추천질문</span>
             <div className={styles.suggestedContent}>
               {recommendQuestions.map((question, index) => (
-                <button className={styles.suggestedButton} key={index}>
+                <button
+                  className={styles.suggestedButton}
+                  key={index}
+                  onClick={() => handleFormSubmit(null, question)}
+                >
                   <span>{question}</span>
                 </button>
               ))}
@@ -49,11 +79,13 @@ export const ChatBotPage = () => {
           </>
         )}
 
-        <form className={styles.chatInputForm}>
+        <form className={styles.chatInputForm} onSubmit={handleFormSubmit}>
           <input
             type="text"
             className={styles.chatInputText}
             placeholder="질문을 입력하세요."
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
           />
           <button type="submit" className={styles.chatSendButton}>
             <img src={enter_icon} alt="" />
