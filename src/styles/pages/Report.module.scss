@@ -207,6 +207,7 @@
       font-size: rem(43.333px);
       font-weight: 700;
       position: relative;
+      text-align: center;
 
       img {
         position: absolute;
@@ -224,4 +225,79 @@
 
 .labelBlue {
   @include label($color-main);
+}
+
+.modalWrapper {
+  @include flex();
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  .spinnerWrapper {
+    @include flex(column, $gap: vh(47px));
+    .spinner {
+      width: vw(369px);
+      height: vw(369px);
+      border-radius: 100%;
+      border: vw(21px) solid white;
+      border-top: vw(21px) solid $color-main;
+      animation: spinner 1s infinite;
+    }
+    span {
+      color: #fff;
+      font-size: rem(30px);
+      font-weight: 700;
+    }
+  }
+
+  .modalContent {
+    max-width: 800px;
+    width: 100%;
+    padding: 65px 112px;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    @include flex(column, $gap: 45px);
+
+    .modalDesc {
+      @include flex(column, $gap: 25px);
+      .modalTitle {
+        font-size: rem(24px);
+        color: $color-sub;
+        font-weight: 700;
+        span {
+          color: $color-main;
+          font-weight: 700;
+        }
+      }
+
+      .modalCaption {
+        font-size: rem(22px);
+        color: rgba(170, 170, 170, 0.66);
+      }
+    }
+
+    .confirmButton {
+      color: white;
+      background-color: $color-main;
+      border-radius: 12px;
+      font-size: rem(22px);
+      padding: 15px 100px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
