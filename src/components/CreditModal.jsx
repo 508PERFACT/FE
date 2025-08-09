@@ -1,24 +1,17 @@
+import React from 'react';
 import styles from '@/styles/components/CreditModal.module.scss';
 import { credit_deduct_icon } from '@/assets';
-import api from '@/apis/axiosInstance';
 
-export const CreditModal = ({ modalType, setModalType, inputUrl }) => {
-  const handleButtonClick = () => {
-    const fetchData = async () => {
-      const url = inputUrl.trim();
-      if (!url) return;
-      const res = await api.post('/report', {
-        url,
-      });
-      console.log(res);
-    };
-    fetchData();
-    setModalType('complate');
+export const CreditModal = ({ modalType, setModalType, onConfirm }) => {
+  const handleConfirm = () => {
+    if (typeof onConfirm === 'function') {
+      onConfirm();
+    }
   };
   return (
     <div className={styles.modalWrapper}>
       <div className={styles.modalContent}>
-        {modalType === 'deduct' && (
+        {modalType === 'deduct' ? (
           <>
             <div className={styles.modalDesc}>
               <span className={styles.modalTitle}>
@@ -33,13 +26,12 @@ export const CreditModal = ({ modalType, setModalType, inputUrl }) => {
               >
                 취소
               </div>
-              <div className={styles.confirmButton} onClick={handleButtonClick}>
+              <div className={styles.confirmButton} onClick={handleConfirm}>
                 확인
               </div>
             </div>
           </>
-        )}
-        {modalType === 'complate' && (
+        ) : modalType === 'complate' ? (
           <>
             {' '}
             <div className={styles.modalDesc}>
@@ -60,7 +52,7 @@ export const CreditModal = ({ modalType, setModalType, inputUrl }) => {
               </div>
             </div>
           </>
-        )}
+        ) : null}
       </div>
     </div>
   );

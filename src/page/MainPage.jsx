@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import styles from '@/styles/pages/MainPage.module.scss';
 import { credit_icon, enter_icon } from '@/assets';
 import { CreditModal } from '@/components/CreditModal';
+import { AnalyzeModal } from '@/components/AnalyzeModal';
 import api from '@/apis/axiosInstance';
 
 export const MainPage = () => {
   const [modalType, setModalType] = useState(null);
   const [inputUrl, setInputUrl] = useState('');
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [dailyCredit, setDailyCredit] = useState(0);
   useEffect(() => {
     const getSubscribe = async () => {
@@ -22,13 +24,32 @@ export const MainPage = () => {
 
   return (
     <div className={styles.container}>
-      {(modalType === 'deduct' || modalType === 'complate') && (
+      {isAnalyzing ? (
+        <AnalyzeModal />
+      ) : modalType === 'deduct' || modalType === 'complate' ? (
         <CreditModal
           modalType={modalType}
           setModalType={setModalType}
-          inputUrl={inputUrl}
+          onConfirm={async () => {
+            const url = inputUrl.trim();
+            if (!url) {
+              setModalType('complate');
+              return;
+            }
+            try {
+              setIsAnalyzing(true);
+              const res = await api.post('/api/report', { url });
+              console.log(res);
+              setModalType('close');
+            } catch (error) {
+              console.error(error?.response?.data || error);
+              setModalType('complate');
+            } finally {
+              setIsAnalyzing(false);
+            }
+          }}
         />
-      )}
+      ) : null}
       <div className={styles.content}>
         <div className={styles.title}>
           신뢰도를 분석할 네이버 뉴스 링크를 입력해주세요.
