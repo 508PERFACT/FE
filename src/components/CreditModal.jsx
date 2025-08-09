@@ -2,7 +2,14 @@ import React from 'react';
 import styles from '@/styles/components/CreditModal.module.scss';
 import { credit_deduct_icon } from '@/assets';
 
-export const CreditModal = ({ modalType, setModalType, onConfirm }) => {
+export const CreditModal = ({
+  modalType,
+  setModalType,
+  onConfirm,
+  errTitleRed = '링크(URL) ',
+  errTitle = '오류입니다.',
+  errCaption = '올바른 링크를 입력해주세요.',
+}) => {
   const handleConfirm = () => {
     if (typeof onConfirm === 'function') {
       onConfirm();
@@ -36,12 +43,10 @@ export const CreditModal = ({ modalType, setModalType, onConfirm }) => {
             {' '}
             <div className={styles.modalDesc}>
               <span className={styles.modalTitle}>
-                <span className={styles.modalTitleRed}>링크(URL) </span>
-                오류입니다.
+                <span className={styles.modalTitleRed}>{errTitleRed}</span>
+                {errTitle}
               </span>
-              <div className={styles.modalCaption}>
-                올바른 링크를 입력해주세요.
-              </div>
+              <div className={styles.modalCaption}>{errCaption}</div>
             </div>
             <div className={styles.modalButtonWrapper}>
               <div
