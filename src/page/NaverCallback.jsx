@@ -35,12 +35,18 @@ export const NaverCallback = () => {
         console.log(data);
 
         // 토큰 저장
-        if (data?.result.accessToken) {
+        if (data?.result?.accessToken) {
           localStorage.setItem('access_token', data.result.accessToken);
+        } else if (data?.accessToken) {
+          // 백엔드 응답 포맷이 다른 경우 대비
+          localStorage.setItem('access_token', data.accessToken);
         }
 
-        // 홈으로 이동
-        navigate('/');
+        // 로그인 이전 목적지로 이동 (없으면 홈)
+        const redirectPath =
+          sessionStorage.getItem('post_login_redirect') || '/';
+        sessionStorage.removeItem('post_login_redirect');
+        navigate(redirectPath, { replace: true });
       } catch (err) {
         console.log(err);
         setErrorMessage(
