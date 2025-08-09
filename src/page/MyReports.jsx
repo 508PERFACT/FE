@@ -1,5 +1,5 @@
 import styles from '@/styles/pages/MyReports.module.scss';
-import { arrow_right, report_blue } from '@/assets';
+import { arrow_right, logo_modal, report_blue } from '@/assets';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import api from '@/apis/axiosInstance';
@@ -44,26 +44,35 @@ export const MyReports = () => {
         <span>레포트 저장함</span>
       </div>
       <div className={styles.content}>
-        {pageData?.reports.map((report) => (
-          <div className={styles.listItem} key={report.reportId}>
-            <div className={styles.listLeft}>
-              <div className={styles.date}>
-                {formattedDate(report.createdAt)}
+        {pageData !== undefined && pageData?.reports.length != 0 ? (
+          pageData?.reports.map((report) => (
+            <div className={styles.listItem} key={report.reportId}>
+              <div className={styles.listLeft}>
+                <div className={styles.date}>
+                  {formattedDate(report.createdAt)}
+                </div>
+                <div
+                  className={styles.listTitle}
+                  onClick={() => navigate(`/report/${report.reportId}`)}
+                >
+                  {report.title}
+                </div>
               </div>
-              <div
-                className={styles.listTitle}
+              <img
+                src={arrow_right}
+                alt="arrow"
                 onClick={() => navigate(`/report/${report.reportId}`)}
-              >
-                {report.title}
-              </div>
+              />
             </div>
-            <img
-              src={arrow_right}
-              alt="arrow"
-              onClick={() => navigate(`/report/${report.reportId}`)}
-            />
+          ))
+        ) : (
+          <div className={styles.blankPage}>
+            <img src={logo_modal} alt="logo" />
+            <div className={styles.blank}>
+              저장된 레포트가 없습니다. 레포트를 추가해주세요!
+            </div>
           </div>
-        ))}
+        )}
       </div>
       <div className={styles.PageNav}>
         {currentPage != 1 && (
@@ -75,7 +84,7 @@ export const MyReports = () => {
           </div>
         )}
         <div className={styles.currentPage}>{id}</div>
-        {(pageData?.last || pageData?.totalPages > currentPage) && (
+        {!pageData?.last && pageData?.totalPages > currentPage && (
           <div
             className={styles.nextButton}
             onClick={() => handlePageChange(currentPage + 1)}
