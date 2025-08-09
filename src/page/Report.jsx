@@ -1,8 +1,9 @@
+import api from '@/apis/axiosInstance';
 import { signature } from '@/assets';
 import { useHover } from '@/hooks/useHover';
 import styles from '@/styles/pages/Report.module.scss';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export const Report = () => {
   const [reportData, setReportData] = useState({});
@@ -10,14 +11,24 @@ export const Report = () => {
   const chatbotHover = useHover();
   const [reliability, setReliability] = useState({});
 
+  const { id } = useParams();
+
   useEffect(() => {
-    setReportData(mockNewsReports);
-  }, []);
+    const fetchData = async () => {
+      try {
+        // const res = await api.get(`user/${id}`);
+        // if (res?.data.isSuccess) setReportData(res);
+        setReportData(mockNewsReports);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [id]);
 
   useEffect(() => {
     const score = reportData.trueScore?.overallScore;
     setReliability(getReliabilityMessage(score));
-    console.log(reliability);
   }, [reportData, reliability]);
 
   if (!reportData || Object.keys(reportData).length === 0) {
@@ -146,7 +157,7 @@ export const Report = () => {
               <div className={styles.badges}>
                 {reportData.reportBadges.map((badge) => (
                   <div className={styles.badge} key={badge.badgeId}>
-                    {badge.badgeDescription}
+                    {badge.badgeName}
                   </div>
                 ))}
               </div>
@@ -197,8 +208,8 @@ const mockNewsReports = {
   reportBadges: [
     {
       badgeId: 1,
-      badgeName: 'FACT_VERIFICATION_IMPOSSIBLE',
-      badgeDescription: '사실 검증 불가',
+      badgeName: '사실 검증 불가',
+      badgeDescription: 'FACT_VERIFICATION_IMPOSSIBLE',
     },
   ],
   createdAt: '2025-08-07T20:20:58.994Z',
