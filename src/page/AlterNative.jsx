@@ -52,6 +52,11 @@ export const AlterNative = () => {
         <div className={`${styles.section} ${styles.tableSection}`}>
           <div className={styles.labelBlue}>반대시각 뉴스</div>
           <table>
+            <colgroup>
+              <col style={{ width: '100px' }} />
+              <col style={{ width: '150px' }} />
+              <col style={{ width: '150px' }} />
+            </colgroup>
             <thead>
               <tr>
                 <th>항목</th>
@@ -75,6 +80,11 @@ export const AlterNative = () => {
         <div className={`${styles.section} ${styles.tableSection}`}>
           <div className={styles.labelBlue}>반대시각 뉴스</div>
           <table>
+            <colgroup>
+              <col style={{ width: '100px' }} />
+              <col style={{ width: '150px' }} />
+              <col style={{ width: '150px' }} />
+            </colgroup>
             <thead>
               <tr>
                 <th>핵심 주제</th>
