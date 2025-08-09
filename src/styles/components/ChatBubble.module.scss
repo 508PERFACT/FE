@@ -17,6 +17,7 @@
   padding: 29px;
   width: 88%;
   justify-content: flex-start;
+  min-height: 87px;
   &::after {
     content: '';
     width: 0px;
@@ -49,5 +50,40 @@
     position: absolute;
     bottom: 0;
     right: -19px;
+  }
+}
+
+.loadingDots {
+  width: 100%;
+  @include flex($gap: 40px);
+}
+
+.loadingDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ccc;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loadingDot:nth-child(1) {
+  animation-delay: 0s;
+}
+.loadingDot:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.loadingDot:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    background-color: #a8bcff;
+    transform: scale(1);
+  }
+  50% {
+    background-color: $color-main;
+    transform: scale(1.3);
   }
 }

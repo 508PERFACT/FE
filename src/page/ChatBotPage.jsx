@@ -10,6 +10,7 @@ export const ChatBotPage = () => {
   const { id: reportId } = useParams();
   const [isChatStarted, setIsChatStarted] = useState(false);
   const [userInput, setUserInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const { messages, recommendQuestions, addMessage } = useChatData(
     reportId,
@@ -21,7 +22,10 @@ export const ChatBotPage = () => {
     if (!questionText.trim()) return;
 
     addMessage('USER', questionText);
+    setIsLoading(true);
+
     try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       const res = await api.post(`report/${reportId}/chat`, {
         userInput: questionText,
       });
@@ -35,6 +39,7 @@ export const ChatBotPage = () => {
     } finally {
       setUserInput('');
       setIsChatStarted(true);
+      setIsLoading(false);
     }
   };
 
@@ -50,6 +55,7 @@ export const ChatBotPage = () => {
                 message={msg.message}
               />
             ))}
+            {isLoading && <ChatBubble senderType={'AI'} message={'로딩중'} />}
           </div>
         </div>
       ) : (
