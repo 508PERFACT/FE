@@ -2,20 +2,20 @@ import React from 'react';
 import styles from '@/styles/components/ChatBubble.module.scss';
 
 import { logo_chatbot } from '@/assets';
-export const ChatBubble = ({ sender, content }) => {
+export const ChatBubble = ({ senderType, message }) => {
   return (
     <div
       className={`${styles.wrapper} ${
-        sender === 'bot' ? styles.bot : styles.user
+        senderType === 'AI' ? styles.bot : styles.user
       }`}
       style={{
-        background: sender === 'bot' ? '#DBF1FF' : '#3A68FF',
-        color: sender === 'bot' ? '#424145' : 'white',
+        background: senderType === 'AI' ? '#DBF1FF' : '#3A68FF',
+        color: senderType === 'AI' ? '#424145' : 'white',
       }}
     >
       <span className={styles.text}>
-        {content}
-        {sender === 'bot' ? <img src={logo_chatbot} alt="bot" /> : ''}
+        {message}
+        {senderType === 'AI' ? <img src={logo_chatbot} alt="bot" /> : ''}
       </span>
     </div>
   );

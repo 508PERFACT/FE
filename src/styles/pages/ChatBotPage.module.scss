@@ -61,8 +61,8 @@
         border: none;
         background-color: $color-main;
         border-radius: 45px;
-        min-width: min(373px, 40vw);
-        padding: 10px 0;
+        min-width: min(500px, 40vw);
+        padding: 10px 10px;
         span {
           color: white;
           font-size: rem(22px);
@@ -97,8 +97,7 @@
         }
       }
       .chatSendButton {
-        background-color: $color-main;
-        min-width: 50px;
+        background: transparent;
         min-height: 50px;
         border: none;
         border-radius: 50px;
