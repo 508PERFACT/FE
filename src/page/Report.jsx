@@ -7,20 +7,20 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 export const Report = () => {
   const [reportData, setReportData] = useState({});
-  const alterNewsHover = useHover();
-  const chatbotHover = useHover();
   const [reliability, setReliability] = useState({});
   const [modalType, setModalType] = useState('close');
-  const navigate = useNavigate();
 
+  const alterNewsHover = useHover();
+  const chatbotHover = useHover();
+
+  const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const res = await api.get(`user/${id}`);
-        // if (res?.data.isSuccess) setReportData(res);
-        setReportData(mockNewsReports);
+        const res = await api.get(`user/${id}`);
+        if (res?.data.isSuccess) setReportData(res);
       } catch (error) {
         console.error(error);
       }
@@ -36,17 +36,17 @@ export const Report = () => {
   const handleAlterNative = async () => {
     setModalType('loading');
     try {
-      // const res = await api.get(`/report/${id}/alternative`);
-      // if (res.data.isSuccess) {
-      navigate(`/report/${id}/alternative`, {
-        state: {
-          res: mockAlterNewsReports.result, // todo 통신 시 삭제
-          overallScore: reportData.trueScore.overallScore,
-          reliability,
-        },
-      });
-      setModalType('close');
-      // }
+      const res = await api.get(`/report/${id}/alternative`);
+      if (res.data.isSuccess) {
+        navigate(`/report/${id}/alternative`, {
+          state: {
+            res,
+            overallScore: reportData.trueScore.overallScore,
+            reliability,
+          },
+        });
+        setModalType('close');
+      }
     } catch (error) {
       console.error(error);
       setModalType('false');
@@ -274,101 +274,3 @@ const reliabilityMessages = [
 
 const getReliabilityMessage = (score) =>
   reliabilityMessages.find(({ min, max }) => score >= min && score <= max);
-
-const mockNewsReports = {
-  reportId: 1,
-  title: '"더워도 에어컨 켜지 마세요" 경고…노후 아파트 무슨 일',
-  category: '사회',
-  oneLineSummary: '노후된 아파트에 대한 에어컨 사용 경고 뉴스',
-  url: 'https://n.news.naver.com/mnews/article/015/0005167504',
-  publisher: '뉴스1',
-  publicationDate: '2025-08-06',
-  summary:
-    '노후화된 아파트의 전기 설비가 급증하는 전력 수요를 감당하지 못해 예고 정전 및 실제 정전 사고가 빈발하고 있습니다. 서울, 부산, 경기 등의 지역에서 다수의 노후 아파트 단지에서 정전 사례가 보고되었으며, 이로 인해 인근 시설에도 영향을 미쳤습니다. 한국전력은 이러한 문제가 변압기와 개폐기의 용량 부족 및 자체 설비의 노후화로 인한 것이라고 지적했습니다. 전국적으로 30년 초과 노후 아파트 비율이 증가하고 있으며, 특히 분당 지역은 88%에 달하는 등 문제가 심각해지고 있습니다. 정부는 여름철 전력 수급 대책을 마련했으나, 근본적인 해결책 부재로 인해 지속적인 문제가 예상됩니다.',
-  chatbotContext: `[기사 분석 리포트 요약]
-이 기사는 '뉴스1'에서 보도한 것으로, 총점 82점(보통)으로 평가되었습니다.
-
-[세부 평가 근거]
-출처 신뢰성(75점): 뉴스1은 신뢰할 만한 뉴스 소스이지만, 기사 내용 중 일부는 추가적인 검증이 필요합니다.
-사실 근거(90점): 정확한 날짜, 지역, 수치 등을 포함한 구체적인 사례와 데이터가 제시되어 사실성에 대한 신뢰도가 높습니다.
-광고/과장 표현(80점): 기사는 주로 사실을 바탕으로 하고 있지만, 일부 표현은 독자의 주의를 끌기 위해 다소 강조되어 있을 수 있습니다.
-편향성(70점): 기사는 다양한 관점을 고려하기보다는 문제의 심각성과 기술적 측면에 초점을 맞추고 있습니다.
-기사 형식(85점): 정보가 체계적으로 정리되어 있고, 중요한 내용이 누락되지 않았으며, 이해하기 쉽게 작성되었습니다.
-
-[부여된 AI 배지]
-사실 검증 불가: 일부 내용의 추가적인 검증이 필요함을 의미합니다.`,
-  trueScore: {
-    sourceReliability: 75,
-    factualBasis: 90,
-    adExaggeration: 80,
-    bias: 70,
-    articleStructure: 85,
-    overallScore: 55,
-  },
-  reportBadges: [
-    {
-      badgeId: 1,
-      badgeName: '사실 검증 불가',
-      badgeDescription: 'FACT_VERIFICATION_IMPOSSIBLE',
-    },
-  ],
-  createdAt: '2025-08-07T20:20:58.994Z',
-  updatedAt: '2025-08-07T20:20:58.994Z',
-};
-
-const mockAlterNewsReports = {
-  isSuccess: true,
-  code: 'COMMON2000',
-  message: '성공입니다.',
-  result: {
-    alternativeArticleId: 1,
-    title: "위고비, 실제로는 체중 감량 효과 미미... 전문가들 '회의적'",
-    url: 'https://example.com/opposing-article',
-    publicationDate: '2024-01-15',
-    summary:
-      '위고비의 체중 감량 효과에 대해 전문가들이 회의적인 시각을 보이고 있다.',
-    result:
-      '위고비의 체중 감량 효과는 제한적이며, 전문가들은 장기적인 효과에 대해 의문을 제기한다.',
-    contentComparisons: [
-      {
-        title: '강조점',
-        article: '위고비의 체중 감량 효과를 강조',
-        altArticle: '위고비의 효과에 대한 회의적 시각 제시',
-      },
-      {
-        title: '접근 방식',
-        article: '긍정적인 사용자 경험 중심',
-        altArticle: '전문가 의견과 연구 결과 중심',
-      },
-      {
-        title: '톤',
-        article: '낙관적이고 긍정적',
-        altArticle: '객관적이고 회의적',
-      },
-      {
-        title: '의도',
-        article: '제품의 효과 홍보',
-        altArticle: '객관적 사실 전달',
-      },
-    ],
-    perspectiveComparisons: [
-      {
-        title: '감량 효과',
-        article: '상당한 체중 감량 효과 강조',
-        altArticle: '제한적이고 일시적인 효과 설명',
-      },
-      {
-        title: '부작용 강조',
-        article: '부작용을 최소화하여 표현',
-        altArticle: '잠재적 부작용에 대한 경고',
-      },
-      {
-        title: '주요 인용 대상',
-        article: '사용자 후기와 체험담 중심',
-        altArticle: '의료 전문가와 연구자 의견 중심',
-      },
-    ],
-    aiConclusion:
-      '위고비에 대한 두 기사의 접근 방식이 크게 다르다. 원본 기사는 사용자 경험과 긍정적 효과를 강조하는 반면, 대안 기사는 전문가 의견과 객관적 연구 결과를 바탕으로 한 회의적 시각을 제시한다. 소비자는 두 관점을 모두 고려하여 개인적인 상황과 건강 상태에 맞는 판단을 내리는 것이 중요하다.',
-  },
-};
