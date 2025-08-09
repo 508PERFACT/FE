@@ -12,6 +12,9 @@
     @include flex($justify-content: space-between);
     width: 100%;
     max-width: calc(1920px - 1024px);
+    a {
+      @include flex();
+    }
     .blank {
       display: flex;
       flex: 1 1 0;
@@ -22,8 +25,10 @@
       .planButton {
         padding: 10px 27.5px;
         border-radius: 10px;
-        border: 2px solid $color-main;
-        background-color: white;
+        box-shadow: 0 0 0 2px $color-main inset;
+        background: white;
+        text-decoration: none;
+        transition: background 0.3s ease;
         span {
           font-size: rem(21px);
           font-weight: 500;
@@ -31,6 +36,7 @@
         }
         &:hover {
           cursor: pointer;
+          background: rgb(239, 239, 239);
         }
       }
     }
