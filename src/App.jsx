@@ -8,6 +8,7 @@ import { Subscribe } from './page/Subscribe';
 import { MainPage } from './page/MainPage';
 import { Report } from './page/Report';
 import { AlterNative } from './page/AlterNative';
+import { NaverCallback } from './page/NaverCallback';
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
         </Route>
         <Route>
           <Route path="/login" element={<Login />} />
+          {/* 네이버 리디렉트 콜백 경로: 네이버 콘솔 등록값과 동일하게 설정 */}
+          <Route path="/login/oauth2/code/naver" element={<NaverCallback />} />
         </Route>
       </Routes>
     </BrowserRouter>
