@@ -8,10 +8,17 @@ export const Report = () => {
   const [reportData, setReportData] = useState({});
   const alterNewsHover = useHover();
   const chatbotHover = useHover();
+  const [reliability, setReliability] = useState({});
 
   useEffect(() => {
     setReportData(mockNewsReports);
   }, []);
+
+  useEffect(() => {
+    const score = reportData.trueScore?.overallScore;
+    setReliability(getReliabilityMessage(score));
+    console.log(reliability);
+  }, [reportData, reliability]);
 
   if (!reportData || Object.keys(reportData).length === 0) {
     return <div>로딩 중...</div>;
@@ -129,7 +136,9 @@ export const Report = () => {
               <div className={styles.labelBlue}>신뢰도 점수</div>
               <div className={styles.score}>
                 {reportData.trueScore.overallScore}
-                <span>✅ 신뢰도 높음</span>
+                <span style={{ color: reliability?.color }}>
+                  {reliability?.message}
+                </span>
               </div>
             </div>
             <div className={styles.sectionRow}>
@@ -147,7 +156,7 @@ export const Report = () => {
       </div>
       <div className={styles.result}>
         <span>
-          "객관적이며 신뢰할 수 있는 기사입니다."
+          {reliability?.result}
           <img src={signature} alt="sign" />
         </span>
       </div>
@@ -183,7 +192,7 @@ const mockNewsReports = {
     adExaggeration: 80,
     bias: 70,
     articleStructure: 85,
-    overallScore: 82,
+    overallScore: 55,
   },
   reportBadges: [
     {
@@ -195,3 +204,39 @@ const mockNewsReports = {
   createdAt: '2025-08-07T20:20:58.994Z',
   updatedAt: '2025-08-07T20:20:58.994Z',
 };
+
+const reliabilityMessages = [
+  {
+    min: 80,
+    max: 100,
+    message: '✅ 신뢰도 높음',
+    result: '“객관적이며 신뢰할 수 있는 기사입니다.”',
+    color: '#00B200',
+  },
+  {
+    min: 60,
+    max: 79,
+    message: '🟨 신뢰도 보통',
+    result:
+      '“기본적인 정보는 신뢰할 수 있으나, 일부 내용은 추가 확인이 필요합니다.”',
+    color: '#EFB600',
+  },
+  {
+    min: 40,
+    max: 59,
+    message: '🟨 신뢰도 보통',
+    result:
+      '“과장되거나 근거가 부족한 내용이 포함되어 있어 주의가 필요합니다.”',
+    color: '#EFB600',
+  },
+  {
+    min: 0,
+    max: 39,
+    message: '⛔ 신뢰도 매우 낮음',
+    result: '“신뢰할 수 없는 정보 또는 광고성·왜곡 가능성이 높은 기사입니다.”',
+    color: '#EF0000',
+  },
+];
+
+const getReliabilityMessage = (score) =>
+  reliabilityMessages.find(({ min, max }) => score >= min && score <= max);
