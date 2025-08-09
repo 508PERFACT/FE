@@ -32,13 +32,14 @@ export const useChatData = (reportId) => {
   // 메세지 추가 함수
   const addMessage = (senderType, message) => {
     const messageData = {
-      chatId: messages.length() + 1,
+      chatId: Date.now(),
       senderType: senderType,
       message: message,
     };
     setMessages((prev) => [...prev, messageData]);
+    console.log(messages);
   };
-  return { messages, recommendQuestions, isLoading, setMessages, addMessage };
+  return { messages, recommendQuestions, isLoading, addMessage };
 };
 
 const mockQuestions = {
