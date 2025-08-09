@@ -23,7 +23,9 @@
         padding: 10px 27.5px;
         border-radius: 10px;
         border: 2px solid $color-main;
-        background-color: white;
+        background: white;
+        text-decoration: none;
+        transition: background 0.3s ease;
         span {
           font-size: rem(21px);
           font-weight: 500;
@@ -31,6 +33,7 @@
         }
         &:hover {
           cursor: pointer;
+          background: rgb(239, 239, 239);
         }
       }
     }
