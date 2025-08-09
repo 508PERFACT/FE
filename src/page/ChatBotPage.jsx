@@ -11,15 +11,16 @@ export const ChatBotPage = () => {
   const [isChatStarted, setIsChatStarted] = useState(false);
   const [userInput, setUserInput] = useState('');
 
-  const { messages, recommendQuestions, isLoading, addMessage } =
-    useChatData(reportId);
+  const { messages, recommendQuestions, addMessage } = useChatData(
+    reportId,
+    setIsChatStarted,
+  );
 
   const handleFormSubmit = async (e, questionText = userInput) => {
     if (e) e.preventDefault();
     if (!questionText.trim()) return;
 
     addMessage('USER', questionText);
-
     try {
       const res = await api.post(`report/${reportId}/chat`, {
         userInput: questionText,

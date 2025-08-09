@@ -1,14 +1,12 @@
 import api from '@/apis/axiosInstance';
 import { useEffect, useState } from 'react';
 
-export const useChatData = (reportId) => {
+export const useChatData = (reportId, setIsChatStarted) => {
   const [messages, setMessages] = useState([]);
   const [recommendQuestions, setRecommendQuestions] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       try {
         // const [chatRes, questionsRes] = await Promise.all([
         //   api.get(`/api/report/${reportId}/chat`),
@@ -22,12 +20,14 @@ export const useChatData = (reportId) => {
         setRecommendQuestions(mockQuestions.result.questions);
       } catch (error) {
         console.error(error);
-      } finally {
-        setIsLoading(false);
       }
     };
     fetchData();
   }, [reportId]);
+
+  useEffect(() => {
+    if (messages.length != 0) setIsChatStarted(true);
+  }, [messages]);
 
   // 메세지 추가 함수
   const addMessage = (senderType, message) => {
@@ -39,7 +39,7 @@ export const useChatData = (reportId) => {
     setMessages((prev) => [...prev, messageData]);
     console.log(messages);
   };
-  return { messages, recommendQuestions, isLoading, addMessage };
+  return { messages, recommendQuestions, addMessage };
 };
 
 const mockQuestions = {
