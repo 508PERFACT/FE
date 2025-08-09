@@ -3,7 +3,7 @@ import styles from '@/styles/pages/MainPage.module.scss';
 import { credit_icon, enter_icon } from '@/assets';
 import { CreditNoticetModal } from '@/components/CreditModal';
 export const MainPage = () => {
-  const [modalType, setModalType] = useState('deduct');
+  const [modalType, setModalType] = useState(null);
 
   return (
     <div className={styles.container}>
