@@ -47,9 +47,9 @@
     @include flex(column, $justify-content: flex-start);
     width: 100%;
     position: fixed;
-    padding-bottom: 116px;
+    padding-bottom: vh(116px);
     bottom: 0px;
-    background: linear-gradient(rgba(0, 0, 0, 0), white 90%);
+    background: linear-gradient(rgba(0, 0, 0, 0), white 50%);
     .suggestedTitle {
       font-size: rem(18px);
       color: $color-main;
