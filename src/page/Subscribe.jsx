@@ -38,29 +38,33 @@ export const Subscribe = () => {
       <div className={styles.content}>
         <table>
           <thead>
-            <td>항목</td>
-            <td>내용</td>
+            <tr>
+              <th>항목</th>
+              <th>내용</th>
+            </tr>
           </thead>
-          <tr>
-            <td>플랜 이름</td>
-            <td>{subscribeData.planName}</td>
-          </tr>
-          <tr>
-            <td>구독 상태</td>
-            <td>{subscribeData.subscribeStatus}</td>
-          </tr>
-          <tr>
-            <td>다음 결제일</td>
-            <td>{subscribeData.nextBillingDate}</td>
-          </tr>
-          <tr>
-            <td>일간 크레딧 제공량</td>
-            <td>{subscribeData.dailyCredit}건</td>
-          </tr>
-          <tr>
-            <td>이번 달 사용량</td>
-            <td>{subscribeData.thisMonthUsage}건 사용됨</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>플랜 이름</td>
+              <td>{subscribeData.planName}</td>
+            </tr>
+            <tr>
+              <td>구독 상태</td>
+              <td>{subscribeData.subscribeStatus}</td>
+            </tr>
+            <tr>
+              <td>다음 결제일</td>
+              <td>{subscribeData.nextBillingDate}</td>
+            </tr>
+            <tr>
+              <td>일간 크레딧 제공량</td>
+              <td>{subscribeData.dailyCredit}건</td>
+            </tr>
+            <tr>
+              <td>이번 달 사용량</td>
+              <td>{subscribeData.thisMonthUsage}건 사용됨</td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <div className={styles.buttonWrapper}>
