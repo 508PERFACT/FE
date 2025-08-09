@@ -1,17 +1,46 @@
 import React, { useState } from 'react';
 import styles from '@/styles/pages/ChatBotPage.module.scss';
 import { ChatBubble } from '@/components/ChatBubble';
+import { useParams } from 'react-router-dom';
+import { enter_icon } from '@/assets';
+import { useChatData } from '@/hooks/useChatData';
+import api from '@/apis/axiosInstance';
 
 export const ChatBotPage = () => {
-  const [isChatStarted, setIsChatStarted] = useState(true);
-  const [messages, setMessages] = useState(mockMessages); // 테스트용 목데이터
+  const { id: reportId } = useParams();
+  const [isChatStarted, setIsChatStarted] = useState(false);
+  const [userInput, setUserInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  // 메세지 추가 함수
-  const addMessage = (sender, content) => {
-    setMessages((prev) => [
-      ...prev,
-      { id: crypto.randomUUID(), sender: sender, content: content },
-    ]);
+  const { messages, recommendQuestions, addMessage } = useChatData(
+    reportId,
+    setIsChatStarted,
+  );
+
+  const handleFormSubmit = async (e, questionText = userInput) => {
+    if (e) e.preventDefault();
+    if (!questionText.trim()) return;
+
+    addMessage('USER', questionText);
+    setIsLoading(true);
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const res = await api.post(`report/${reportId}/chat`, {
+        userInput: questionText,
+      });
+      if (res?.data.isSuccess) {
+        const aiMessage = res.data.result.aiResponse;
+        addMessage('AI', aiMessage);
+      }
+    } catch (error) {
+      console.error(error);
+      addMessage('AI', '죄송합니다. 메시지를 처리하는 중 오류가 발생했습니다.');
+    } finally {
+      setUserInput('');
+      setIsChatStarted(true);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -21,11 +50,12 @@ export const ChatBotPage = () => {
           <div className={styles.mainChatContent}>
             {messages.map((msg) => (
               <ChatBubble
-                key={msg.id}
-                sender={msg.sender}
-                content={msg.content}
+                key={msg.chatId}
+                senderType={msg.senderType}
+                message={msg.message}
               />
             ))}
+            {isLoading && <ChatBubble senderType={'AI'} message={'로딩중'} />}
           </div>
         </div>
       ) : (
@@ -43,72 +73,32 @@ export const ChatBotPage = () => {
           <>
             <span className={styles.suggestedTitle}>추천질문</span>
             <div className={styles.suggestedContent}>
-              <button className={styles.suggestedButton}>
-                <span>왜 점수가 낮아요?</span>
-              </button>
-              <button className={styles.suggestedButton}>
-                <span>이 기사 왜 광고같나요?</span>
-              </button>
+              {recommendQuestions.map((question, index) => (
+                <button
+                  className={styles.suggestedButton}
+                  key={index}
+                  onClick={() => handleFormSubmit(null, question)}
+                >
+                  <span>{question}</span>
+                </button>
+              ))}
             </div>
           </>
         )}
 
-        <form className={styles.chatInputForm}>
+        <form className={styles.chatInputForm} onSubmit={handleFormSubmit}>
           <input
             type="text"
             className={styles.chatInputText}
             placeholder="질문을 입력하세요."
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
           />
           <button type="submit" className={styles.chatSendButton}>
-            &uarr;
+            <img src={enter_icon} alt="" />
           </button>
         </form>
       </div>
     </div>
   );
 };
-
-const mockMessages = [
-  {
-    id: '1',
-    sender: 'user',
-    content: '안녕하세요!',
-  },
-  {
-    id: '2',
-    sender: 'bot',
-    content: '안녕하세요 😊 무엇을 도와드릴까요?',
-  },
-  {
-    id: '3',
-    sender: 'user',
-    content: '오늘 날씨 어때요?',
-  },
-  {
-    id: '4',
-    sender: 'bot',
-    content:
-      '서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️',
-  },
-  {
-    id: '1',
-    sender: 'user',
-    content: '안녕하세요!',
-  },
-  {
-    id: '2',
-    sender: 'bot',
-    content: '안녕하세요 😊 무엇을 도와드릴까요?',
-  },
-  {
-    id: '3',
-    sender: 'user',
-    content: '오늘 날씨 어때요?',
-  },
-  {
-    id: '4',
-    sender: 'bot',
-    content:
-      '서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️서울은 현재 맑고 기온은 28도입니다 ☀️',
-  },
-];

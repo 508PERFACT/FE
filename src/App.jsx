@@ -15,10 +15,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/report" element={<Report />} />
           <Route path="/report/:id" element={<Report />} />
           <Route path="/report/:id/alternative" element={<AlterNative />} />
-          <Route path="/chatbot" element={<ChatBotPage />} />
+          <Route path="/report/:id/chat" element={<ChatBotPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/myreports/:id" element={<MyReports />} />
           <Route path="/subscribe" element={<Subscribe />} />
