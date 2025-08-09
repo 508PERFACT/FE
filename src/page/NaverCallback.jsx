@@ -41,6 +41,11 @@ export const NaverCallback = () => {
           // 백엔드 응답 포맷이 다른 경우 대비
           localStorage.setItem('access_token', data.accessToken);
         }
+        if (data?.result?.refreshToken) {
+          localStorage.setItem('refresh_token', data.result.refreshToken);
+        } else if (data?.refreshToken) {
+          localStorage.setItem('refresh_token', data.refreshToken);
+        }
 
         // 로그인 이전 목적지로 이동 (없으면 홈)
         const redirectPath =
