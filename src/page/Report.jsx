@@ -3,13 +3,15 @@ import { signature } from '@/assets';
 import { useHover } from '@/hooks/useHover';
 import styles from '@/styles/pages/Report.module.scss';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 export const Report = () => {
   const [reportData, setReportData] = useState({});
   const alterNewsHover = useHover();
   const chatbotHover = useHover();
   const [reliability, setReliability] = useState({});
+  const [modalType, setModalType] = useState('close');
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
@@ -31,147 +33,204 @@ export const Report = () => {
     setReliability(getReliabilityMessage(score));
   }, [reportData, reliability]);
 
+  const handleAlterNative = async () => {
+    setModalType('loading');
+    try {
+      const res = await api.get(`/report/${id}/alternative`);
+      if (res.data.isSuccess) {
+        console.log();
+        navigate(`/report/${id}/alternative`, { result: res });
+        setModalType('close');
+      }
+    } catch (error) {
+      console.error(error);
+      setModalType('false');
+    }
+  };
+
   if (!reportData || Object.keys(reportData).length === 0) {
     return <div>로딩 중...</div>;
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <div className={styles.topSection}>
-          <span className={styles.caption}>퍼팩트가 분석한 결과는요?</span>
-          <div className={styles.titleBox}>
-            <div ref={alterNewsHover.nodeRef} className={styles.linkButton}>
-              다른 시각의 기사보기
+    <>
+      {modalType !== 'close' && (
+        <div className={styles.modalWrapper}>
+          {modalType === 'loading' && (
+            <div className={styles.spinnerWrapper}>
+              <div className={styles.spinner}></div>
+              <span>분석중...</span>
+            </div>
+          )}
+
+          {modalType === 'false' && (
+            <div className={styles.modalContent}>
+              <div className={styles.modalDesc}>
+                <span className={styles.modalTitle}>
+                  <span style={{ color: 'red' }}>분석</span> 실패
+                </span>
+                <div className={styles.modalCaption}>
+                  죄송해요. 다른 시각의 기사를 찾지 못했어요.
+                </div>
+              </div>
               <div
-                className={`${styles.hoverCaption} ${styles.alterNewsCaption}`}
-                style={{
-                  opacity: alterNewsHover.isHovering ? 1 : 0,
-                  visibility: alterNewsHover.isHovering ? 'visible' : 'hidden',
-                }}
+                className={styles.confirmButton}
+                onClick={() => setModalType('close')}
               >
-                사용자가 보고 있던 주제에 대해 상반된 입장을 가진 기사들을
-                비교하며,
-                <br />
-                정보 편향 없이 스스로 판단할 수 있도록 돕는 기능
+                확인
               </div>
             </div>
-            <div className={styles.headerTitle}>💡[AI 통합 리포트]</div>
-            <Link
-              ref={chatbotHover.nodeRef}
-              to={`/chatbot/${reportData.reportId}`}
-              className={styles.linkButton}
-            >
-              AI 설명 챗봇
+          )}
+        </div>
+      )}
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <div className={styles.topSection}>
+            <span className={styles.caption}>퍼팩트가 분석한 결과는요?</span>
+            <div className={styles.titleBox}>
               <div
-                className={`${styles.hoverCaption} ${styles.chatbotCaption}`}
-                style={{
-                  opacity: chatbotHover.isHovering ? 1 : 0,
-                  visibility: chatbotHover.isHovering ? 'visible' : 'hidden',
-                }}
+                ref={alterNewsHover.nodeRef}
+                className={styles.linkButton}
+                onClick={handleAlterNative}
               >
-                신뢰도 리포트를 본 후 생기는 의문을 AI에게 후속 질문하면 <br />
-                사람의 언어로 쉽게 풀어 설명을 해주는 기능
+                다른 시각의 기사보기
+                <div
+                  className={`${styles.hoverCaption} ${styles.alterNewsCaption}`}
+                  style={{
+                    opacity: alterNewsHover.isHovering ? 1 : 0,
+                    visibility: alterNewsHover.isHovering
+                      ? 'visible'
+                      : 'hidden',
+                  }}
+                >
+                  사용자가 보고 있던 주제에 대해 상반된 입장을 가진 기사들을
+                  비교하며,
+                  <br />
+                  정보 편향 없이 스스로 판단할 수 있도록 돕는 기능
+                </div>
               </div>
-            </Link>
-          </div>
-        </div>
-        <div className={styles.topSection}>
-          <span className={styles.caption}>
-            {reportData.publicationDate.split('-').join('.')} /{' '}
-            {reportData.publisher}
-          </span>
-          <div className={styles.newsContent}>
-            <div className={styles.sectionRow}>
-              <div className={styles.labelGray}>기사 원문</div>
-              <a href={reportData.url}>{reportData.title}</a>
+              <div className={styles.headerTitle}>💡[AI 통합 리포트]</div>
+              <Link
+                ref={chatbotHover.nodeRef}
+                to={`/chatbot/${reportData.reportId}`}
+                className={styles.linkButton}
+              >
+                AI 설명 챗봇
+                <div
+                  className={`${styles.hoverCaption} ${styles.chatbotCaption}`}
+                  style={{
+                    opacity: chatbotHover.isHovering ? 1 : 0,
+                    visibility: chatbotHover.isHovering ? 'visible' : 'hidden',
+                  }}
+                >
+                  신뢰도 리포트를 본 후 생기는 의문을 AI에게 후속 질문하면
+                  <br />
+                  사람의 언어로 쉽게 풀어 설명을 해주는 기능
+                </div>
+              </Link>
             </div>
-            <div className={styles.sectionRow}>
-              <div className={styles.labelGray}>분야 / 주제</div>
-              <span>
-                {reportData.category} / {reportData.oneLineSummary}
-              </span>
-            </div>
           </div>
-        </div>
-        <div className={styles.section}>
-          <div className={styles.labelBlue}>3줄 요약</div>
-          <div className={styles.summary}>
-            {reportData.summary.split('. ').map((s, index) => (
-              <p key={index}>{s}.</p>
-            ))}
-          </div>
-        </div>
-        <div className={styles.section}>
-          <div className={styles.labelBlue}>신뢰도 분석</div>
-          <table>
-            <thead>
-              <tr>
-                <th>평가 항목</th>
-                <th>점수</th>
-                <th>설명</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>✅ 출처 신뢰성</td>
-                <td>{reportData.trueScore.sourceReliability}점</td>
-                <td>공영방송 SBS 보도, 명확한기자명, 신뢰도 높은 취재 포맷</td>
-              </tr>
-              <tr>
-                <td>📃 사실근거</td>
-                <td>{reportData.trueScore.factualBasis}점</td>
-                <td> 실사용자 인터뷰, 전문가 견해 인용, 숫자 통계 포함 </td>
-              </tr>
-              <tr>
-                <td>🚨 광고/과장표현</td>
-                <td>{reportData.trueScore.adExaggeration}점</td>
-                <td>‘기적’ 같은 표현은 있지만 맥락상 과장아님</td>
-              </tr>
-              <tr>
-                <td>📌 편향성</td>
-                <td>{reportData.trueScore.bias}점</td>
-                <td>효과 사례뿐 아니라 부작용,오남용 사례도 균형 있게 다름</td>
-              </tr>
-              <tr>
-                <td>📝 기사 형식</td>
-                <td>{reportData.trueScore.articleStructure}점</td>
-                <td>제목과 내용 일치, 문단 구성 명확, 방송 요약 보조 역할</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className={styles.section}>
-          <div className={styles.scoreBadge}>
-            <div className={styles.sectionRow}>
-              <div className={styles.labelBlue}>신뢰도 점수</div>
-              <div className={styles.score}>
-                {reportData.trueScore.overallScore}
-                <span style={{ color: reliability?.color }}>
-                  {reliability?.message}
+          <div className={styles.topSection}>
+            <span className={styles.caption}>
+              {reportData.publicationDate.split('-').join('.')} /{' '}
+              {reportData.publisher}
+            </span>
+            <div className={styles.newsContent}>
+              <div className={styles.sectionRow}>
+                <div className={styles.labelGray}>기사 원문</div>
+                <a href={reportData.url}>{reportData.title}</a>
+              </div>
+              <div className={styles.sectionRow}>
+                <div className={styles.labelGray}>분야 / 주제</div>
+                <span>
+                  {reportData.category} / {reportData.oneLineSummary}
                 </span>
               </div>
             </div>
-            <div className={styles.sectionRow}>
-              <div className={styles.labelGray}>AI 판단 배지</div>
-              <div className={styles.badges}>
-                {reportData.reportBadges.map((badge) => (
-                  <div className={styles.badge} key={badge.badgeId}>
-                    {badge.badgeName}
-                  </div>
-                ))}
+          </div>
+          <div className={styles.section}>
+            <div className={styles.labelBlue}>3줄 요약</div>
+            <div className={styles.summary}>
+              {reportData.summary.split('. ').map((s, index) => (
+                <p key={index}>{s}.</p>
+              ))}
+            </div>
+          </div>
+          <div className={styles.section}>
+            <div className={styles.labelBlue}>신뢰도 분석</div>
+            <table>
+              <thead>
+                <tr>
+                  <th>평가 항목</th>
+                  <th>점수</th>
+                  <th>설명</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>✅ 출처 신뢰성</td>
+                  <td>{reportData.trueScore.sourceReliability}점</td>
+                  <td>
+                    공영방송 SBS 보도, 명확한기자명, 신뢰도 높은 취재 포맷
+                  </td>
+                </tr>
+                <tr>
+                  <td>📃 사실근거</td>
+                  <td>{reportData.trueScore.factualBasis}점</td>
+                  <td> 실사용자 인터뷰, 전문가 견해 인용, 숫자 통계 포함 </td>
+                </tr>
+                <tr>
+                  <td>🚨 광고/과장표현</td>
+                  <td>{reportData.trueScore.adExaggeration}점</td>
+                  <td>‘기적’ 같은 표현은 있지만 맥락상 과장아님</td>
+                </tr>
+                <tr>
+                  <td>📌 편향성</td>
+                  <td>{reportData.trueScore.bias}점</td>
+                  <td>
+                    효과 사례뿐 아니라 부작용,오남용 사례도 균형 있게 다름
+                  </td>
+                </tr>
+                <tr>
+                  <td>📝 기사 형식</td>
+                  <td>{reportData.trueScore.articleStructure}점</td>
+                  <td>제목과 내용 일치, 문단 구성 명확, 방송 요약 보조 역할</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className={styles.section}>
+            <div className={styles.scoreBadge}>
+              <div className={styles.sectionRow}>
+                <div className={styles.labelBlue}>신뢰도 점수</div>
+                <div className={styles.score}>
+                  {reportData.trueScore.overallScore}
+                  <span style={{ color: reliability?.color }}>
+                    {reliability?.message}
+                  </span>
+                </div>
+              </div>
+              <div className={styles.sectionRow}>
+                <div className={styles.labelGray}>AI 판단 배지</div>
+                <div className={styles.badges}>
+                  {reportData.reportBadges.map((badge) => (
+                    <div className={styles.badge} key={badge.badgeId}>
+                      {badge.badgeName}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div className={styles.result}>
+          <span>
+            {reliability?.result}
+            <img src={signature} alt="sign" />
+          </span>
+        </div>
       </div>
-      <div className={styles.result}>
-        <span>
-          {reliability?.result}
-          <img src={signature} alt="sign" />
-        </span>
-      </div>
-    </div>
+    </>
   );
 };
 
