@@ -1,5 +1,5 @@
 import React from 'react';
-import { logo_title } from '@/assets';
+import { logo_title, main_img } from '@/assets';
 import styles from '@/styles/pages/Login.module.scss';
 import { useAuthNaver } from '@/hooks/useAuthNaver';
 
@@ -9,6 +9,9 @@ export const Login = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
+        <div className={styles.mainImg}>
+          <img src={main_img} alt="main" />
+        </div>
         <div className={styles.logo}>
           <img src={logo_title} alt="logo" />
         </div>

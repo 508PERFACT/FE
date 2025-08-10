@@ -13,7 +13,7 @@ import credit_deduct_icon from './credit-deduct-icon.svg';
 import signature from './signature.svg';
 import sheet from './sheet.svg';
 import magnifier from './magnifier.svg';
-
+import main_img from './main-img.svg';
 export {
   logo_title,
   logo_header,
@@ -30,4 +30,5 @@ export {
   signature,
   sheet,
   magnifier,
+  main_img,
 };

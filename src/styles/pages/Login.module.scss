@@ -8,6 +8,17 @@
   .content {
     @include flex(column, $align-items: center, $gap: vh(47px));
     width: vw(498px);
+    .mainImg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
     .logo {
     }
     .titleContainer {
