@@ -181,31 +181,27 @@ export const Report = () => {
                 <tr>
                   <td>✅ 출처 신뢰성</td>
                   <td>{reportData.trueScore?.sourceReliability || 0}점</td>
-                  <td>
-                    공영방송 SBS 보도, 명확한기자명, 신뢰도 높은 취재 포맷
-                  </td>
+                  <td>{reportData.trueScore?.sourceReliabilityReason}</td>
                 </tr>
                 <tr>
                   <td>📃 사실근거</td>
                   <td>{reportData.trueScore?.factualBasis || 0}점</td>
-                  <td> 실사용자 인터뷰, 전문가 견해 인용, 숫자 통계 포함 </td>
+                  <td>{reportData.trueScore?.factualBasisReason}</td>
                 </tr>
                 <tr>
                   <td>🚨 광고/과장표현</td>
                   <td>{reportData.trueScore?.adExaggeration || 0}점</td>
-                  <td>‘기적’ 같은 표현은 있지만 맥락상 과장아님</td>
+                  <td>{reportData.trueScore?.adExaggerationReason}</td>
                 </tr>
                 <tr>
                   <td>📌 편향성</td>
                   <td>{reportData.trueScore?.bias || 0}점</td>
-                  <td>
-                    효과 사례뿐 아니라 부작용,오남용 사례도 균형 있게 다름
-                  </td>
+                  <td>{reportData.trueScore?.biasReason}</td>
                 </tr>
                 <tr>
                   <td>📝 기사 형식</td>
                   <td>{reportData.trueScore?.articleStructure || 0}점</td>
-                  <td>제목과 내용 일치, 문단 구성 명확, 방송 요약 보조 역할</td>
+                  <td>{reportData.trueScore?.articleStructureReason}</td>
                 </tr>
               </tbody>
             </table>
