@@ -83,7 +83,7 @@
               color: #141319;
               font-weight: 500;
               line-height: 175%;
-              padding: vh(8px) vw(35px);
+              padding: vh(8px) 0 vh(8px) vw(35px);
               border-bottom: 12px solid transparent;
             }
           }
@@ -92,7 +92,7 @@
         tbody {
           tr {
             td {
-              padding: vh(20px) vw(35px);
+              padding: vh(20px) 0 vh(20px) vw(35px);
               min-height: vh(57px);
               color: #949494;
               font-weight: 500;
