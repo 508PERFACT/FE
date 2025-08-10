@@ -170,6 +170,11 @@ export const Report = () => {
           <div className={styles.section}>
             <div className={styles.labelBlue}>신뢰도 분석</div>
             <table>
+              <colgroup>
+                <col style={{ width: '100px' }} />
+                <col style={{ width: '50px' }} />
+                <col style={{ width: '250px' }} />
+              </colgroup>
               <thead>
                 <tr>
                   <th>평가 항목</th>
