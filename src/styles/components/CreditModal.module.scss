@@ -9,7 +9,8 @@
   background-color: rgba(0, 0, 0, 0.4);
   @include flex();
   .modalContent {
-    width: vw(757px);
+    max-width: 800px;
+    width: 100%;
     padding: 65px 112px;
     background-color: white;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);

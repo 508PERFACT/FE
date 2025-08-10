@@ -1,15 +1,24 @@
+import React from 'react';
 import styles from '@/styles/components/CreditModal.module.scss';
 import { credit_deduct_icon } from '@/assets';
 
-export const CreditNoticetModal = ({
+export const CreditModal = ({
   modalType,
   setModalType,
-  setIsSubscribe,
+  onConfirm,
+  errTitleRed,
+  errTitle,
+  errCaption,
 }) => {
+  const handleConfirm = () => {
+    if (typeof onConfirm === 'function') {
+      onConfirm();
+    }
+  };
   return (
     <div className={styles.modalWrapper}>
       <div className={styles.modalContent}>
-        {modalType === 'deduct' && (
+        {modalType === 'deduct' ? (
           <>
             <div className={styles.modalDesc}>
               <span className={styles.modalTitle}>
@@ -24,29 +33,20 @@ export const CreditNoticetModal = ({
               >
                 취소
               </div>
-              <div
-                className={styles.confirmButton}
-                onClick={() => {
-                  setModalType('complate');
-                  setIsSubscribe(false);
-                }}
-              >
+              <div className={styles.confirmButton} onClick={handleConfirm}>
                 확인
               </div>
             </div>
           </>
-        )}
-        {modalType === 'complate' && (
+        ) : modalType === 'complate' ? (
           <>
             {' '}
             <div className={styles.modalDesc}>
               <span className={styles.modalTitle}>
-                <span className={styles.modalTitleRed}>링크(URL) </span>
-                오류입니다.
+                <span className={styles.modalTitleRed}>{errTitleRed}</span>
+                {errTitle}
               </span>
-              <div className={styles.modalCaption}>
-                올바른 링크를 입력해주세요.
-              </div>
+              <div className={styles.modalCaption}>{errCaption}</div>
             </div>
             <div className={styles.modalButtonWrapper}>
               <div
@@ -57,7 +57,7 @@ export const CreditNoticetModal = ({
               </div>
             </div>
           </>
-        )}
+        ) : null}
       </div>
     </div>
   );

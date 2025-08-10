@@ -11,6 +11,8 @@ import credit_icon from './credit-icon.svg';
 import enter_icon from './enter-icon.svg';
 import credit_deduct_icon from './credit-deduct-icon.svg';
 import signature from './signature.svg';
+import sheet from './sheet.svg';
+import magnifier from './magnifier.svg';
 
 export {
   logo_title,
@@ -26,4 +28,6 @@ export {
   enter_icon,
   credit_deduct_icon,
   signature,
+  sheet,
+  magnifier,
 };
