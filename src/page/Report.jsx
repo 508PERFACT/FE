@@ -41,7 +41,7 @@ export const Report = () => {
       if (res.data.isSuccess) {
         navigate(`/report/${id}/alternative`, {
           state: {
-            res,
+            res: res.data.result,
             overallScore: reportData.trueScore?.overallScore || 0,
             reliability,
           },
