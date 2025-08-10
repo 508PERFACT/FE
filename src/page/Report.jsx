@@ -19,8 +19,9 @@ export const Report = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await api.get(`user/${id}`);
+        const res = await api.get(`users/${id}`);
         if (res?.data.isSuccess) setReportData(res);
+        console.log(res);
       } catch (error) {
         console.error(error);
       }
