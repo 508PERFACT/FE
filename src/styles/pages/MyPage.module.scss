@@ -20,8 +20,9 @@
     }
 
     .profileLogo {
-      width: vw(126px);
-      height: vw(126px);
+      width: vh(126px);
+      height: vh(126px);
+      padding: vh(36px) vw(24px);
       background-color: #dee7ff;
       border-radius: 100px;
       @include flex();
