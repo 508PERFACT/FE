@@ -118,7 +118,7 @@ export const Report = () => {
               <div className={styles.headerTitle}>💡[AI 통합 리포트]</div>
               <Link
                 ref={chatbotHover.nodeRef}
-                to={`/chatbot/${reportData.reportId}`}
+                to={`/report/${reportData.reportId}/chat`}
                 className={styles.linkButton}
               >
                 AI 설명 챗봇
