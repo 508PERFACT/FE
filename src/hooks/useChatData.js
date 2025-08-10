@@ -9,8 +9,8 @@ export const useChatData = (reportId, setIsChatStarted) => {
     const fetchData = async () => {
       try {
         const [chatRes, questionsRes] = await Promise.all([
-          api.get(`/api/report/${reportId}/chat`),
-          api.get(`/api/report/${reportId}/chat/recommend`),
+          api.get(`/report/${reportId}/chat`),
+          api.get(`/report/${reportId}/chat/recommend`),
         ]);
         setMessages(chatRes.data.result.chatLogs);
         setRecommendQuestions(questionsRes.data.result.questions);
