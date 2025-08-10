@@ -33,7 +33,6 @@ export const useChatData = (reportId, setIsChatStarted) => {
       message: message,
     };
     setMessages((prev) => [...prev, messageData]);
-    console.log(messages);
   };
   return { messages, recommendQuestions, addMessage };
 };

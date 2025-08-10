@@ -21,12 +21,14 @@ export const ChatBotPage = () => {
     if (e) e.preventDefault();
     if (!questionText.trim()) return;
 
-    addMessage('USER', questionText);
+    const text = questionText;
+    addMessage('USER', text);
     setIsLoading(true);
+    setUserInput('');
 
     try {
       const res = await api.post(`report/${reportId}/chat`, {
-        userInput: questionText,
+        userInput: text,
       });
       if (res?.data.isSuccess) {
         const aiMessage = res.data.result.aiResponse;
