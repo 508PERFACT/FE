@@ -227,7 +227,7 @@ export const Report = () => {
                   {reportData.reportBadges ? (
                     reportData.reportBadges.map((badge) => (
                       <div className={styles.badge} key={badge.badgeId}>
-                        {badge.badgeName}
+                        {badge.badgeDescription}
                       </div>
                     ))
                   ) : (
