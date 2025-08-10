@@ -19,8 +19,9 @@ export const Report = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await api.get(`user/${id}`);
-        if (res?.data.isSuccess) setReportData(res);
+        const res = await api.get(`users/${id}`);
+        if (res?.data.isSuccess) setReportData(res.data.result);
+        console.log(res);
       } catch (error) {
         console.error(error);
       }
@@ -41,7 +42,7 @@ export const Report = () => {
         navigate(`/report/${id}/alternative`, {
           state: {
             res,
-            overallScore: reportData.trueScore.overallScore,
+            overallScore: reportData.trueScore?.overallScore || 0,
             reliability,
           },
         });
@@ -117,7 +118,7 @@ export const Report = () => {
               <div className={styles.headerTitle}>💡[AI 통합 리포트]</div>
               <Link
                 ref={chatbotHover.nodeRef}
-                to={`/chatbot/${reportData.reportId}`}
+                to={`/report/${reportData.reportId}/chat`}
                 className={styles.linkButton}
               >
                 AI 설명 챗봇
@@ -148,7 +149,8 @@ export const Report = () => {
               <div className={styles.sectionRow}>
                 <div className={styles.labelGray}>분야 / 주제</div>
                 <span>
-                  {reportData.category} / {reportData.oneLineSummary}
+                  {reportData.category || '분류 없음'} /{' '}
+                  {reportData.oneLineSummary || '요약 없음'}
                 </span>
               </div>
             </div>
@@ -156,9 +158,13 @@ export const Report = () => {
           <div className={styles.section}>
             <div className={styles.labelBlue}>3줄 요약</div>
             <div className={styles.summary}>
-              {reportData.summary.split('. ').map((s, index) => (
-                <p key={index}>{s}.</p>
-              ))}
+              {reportData.summary ? (
+                reportData.summary
+                  .split('. ')
+                  .map((s, index) => <p key={index}>{s}.</p>)
+              ) : (
+                <p>요약 정보가 없습니다.</p>
+              )}
             </div>
           </div>
           <div className={styles.section}>
@@ -174,31 +180,31 @@ export const Report = () => {
               <tbody>
                 <tr>
                   <td>✅ 출처 신뢰성</td>
-                  <td>{reportData.trueScore.sourceReliability}점</td>
+                  <td>{reportData.trueScore?.sourceReliability || 0}점</td>
                   <td>
                     공영방송 SBS 보도, 명확한기자명, 신뢰도 높은 취재 포맷
                   </td>
                 </tr>
                 <tr>
                   <td>📃 사실근거</td>
-                  <td>{reportData.trueScore.factualBasis}점</td>
+                  <td>{reportData.trueScore?.factualBasis || 0}점</td>
                   <td> 실사용자 인터뷰, 전문가 견해 인용, 숫자 통계 포함 </td>
                 </tr>
                 <tr>
                   <td>🚨 광고/과장표현</td>
-                  <td>{reportData.trueScore.adExaggeration}점</td>
+                  <td>{reportData.trueScore?.adExaggeration || 0}점</td>
                   <td>‘기적’ 같은 표현은 있지만 맥락상 과장아님</td>
                 </tr>
                 <tr>
                   <td>📌 편향성</td>
-                  <td>{reportData.trueScore.bias}점</td>
+                  <td>{reportData.trueScore?.bias || 0}점</td>
                   <td>
                     효과 사례뿐 아니라 부작용,오남용 사례도 균형 있게 다름
                   </td>
                 </tr>
                 <tr>
                   <td>📝 기사 형식</td>
-                  <td>{reportData.trueScore.articleStructure}점</td>
+                  <td>{reportData.trueScore?.articleStructure || 0}점</td>
                   <td>제목과 내용 일치, 문단 구성 명확, 방송 요약 보조 역할</td>
                 </tr>
               </tbody>
@@ -209,7 +215,7 @@ export const Report = () => {
               <div className={styles.sectionRow}>
                 <div className={styles.labelBlue}>신뢰도 점수</div>
                 <div className={styles.score}>
-                  {reportData.trueScore.overallScore}
+                  {reportData.trueScore?.overallScore || 0}
                   <span style={{ color: reliability?.color }}>
                     {reliability?.message}
                   </span>
@@ -218,11 +224,15 @@ export const Report = () => {
               <div className={styles.sectionRow}>
                 <div className={styles.labelGray}>AI 판단 배지</div>
                 <div className={styles.badges}>
-                  {reportData.reportBadges.map((badge) => (
-                    <div className={styles.badge} key={badge.badgeId}>
-                      {badge.badgeName}
-                    </div>
-                  ))}
+                  {reportData.reportBadges ? (
+                    reportData.reportBadges.map((badge) => (
+                      <div className={styles.badge} key={badge.badgeId}>
+                        {badge.badgeName}
+                      </div>
+                    ))
+                  ) : (
+                    <span>배지 정보가 없습니다.</span>
+                  )}
                 </div>
               </div>
             </div>
