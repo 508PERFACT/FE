@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from '@/styles/pages/MainPage.module.scss';
 import { credit_icon, enter_icon } from '@/assets';
 import { CreditModal } from '@/components/CreditModal';
@@ -6,6 +7,7 @@ import { AnalyzeModal } from '@/components/AnalyzeModal';
 import api from '@/apis/axiosInstance';
 
 export const MainPage = () => {
+  const navigate = useNavigate();
   const [modalType, setModalType] = useState(null);
   const [inputUrl, setInputUrl] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -49,7 +51,13 @@ export const MainPage = () => {
               setIsAnalyzing(true);
               const res = await api.post('/report', { url });
               console.log(res);
-              setModalType('close');
+
+              // reportId 추출하여 페이지 이동
+              if (res.data && res.data.result && res.data.result.reportId) {
+                navigate(`/report/${res.data.result.reportId}`);
+              } else {
+                setModalType('close');
+              }
             } catch (error) {
               console.error(error?.response?.data || error);
               if (error?.response?.data.message === '크레딧이 부족합니다.') {
