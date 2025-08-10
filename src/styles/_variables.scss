@@ -34,8 +34,8 @@ $color-sub: #424145;
   @include flex();
   color: white;
   font-size: rem(24px);
-  max-width: 170px;
-  width: 100%;
+  min-width: 170px;
+  width: 170px;
   padding: 10px;
   background: $background;
 }

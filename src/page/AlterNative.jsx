@@ -47,11 +47,7 @@ export const AlterNative = () => {
         </div>
         <div className={styles.section}>
           <div className={styles.labelBlue}>반대시각 뉴스</div>
-          <span className={styles.summary}>
-            {reportData.opposingSummary}
-            <br />
-            {reportData.result}
-          </span>
+          <span className={styles.summary}>{reportData.opposingSummary}</span>
         </div>
         <div className={styles.divider}></div>
         <div className={`${styles.section} ${styles.tableSection}`}>

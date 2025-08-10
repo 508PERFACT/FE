@@ -115,7 +115,7 @@
     }
 
     .section {
-      @include flex(row, flex-start, flex-start, vw(64px));
+      @include flex(row, flex-start, flex-start, vw(70px));
       padding: vh(63px) vw(23px);
       width: 100%;
       border-bottom: 2px dashed #ccc;
