@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '@/styles/pages/MyPage.module.scss';
 import { logo_header, report_white, star_sub_white } from '@/assets';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,7 +7,7 @@ import api from '@/apis/axiosInstance';
 export const MyPage = () => {
   const navigate = useNavigate();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-
+  const [nickname, setNickname] = useState('');
   const handleLogout = async () => {
     const refreshToken = localStorage.getItem('refresh_token');
     try {
@@ -27,6 +27,14 @@ export const MyPage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchNickname = async () => {
+      const res = await api.get('users/nickname');
+      if (res.data.isSuccess) setNickname(res.data.result.nickname);
+    };
+    fetchNickname();
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.profileContent}>
@@ -38,10 +46,10 @@ export const MyPage = () => {
         </div>
         <div className={styles.textWrapper}>
           <div className={styles.title}>
-            안녕하세요 <span>{'화이팅'}</span>님
+            안녕하세요 <span>{nickname}</span>님
           </div>
           <div className={styles.subTitle}>
-            {'화이팅'}님을 위해 열심히 문서들의 팩트를 체크하고 있어요!
+            {nickname}님을 위해 열심히 문서들의 팩트를 체크하고 있어요!
           </div>
         </div>
       </div>
