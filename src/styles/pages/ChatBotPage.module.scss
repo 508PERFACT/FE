@@ -63,8 +63,9 @@
         background-color: $color-main;
         border-radius: 45px;
         min-width: min(500px, 40vw);
-        padding: 10px 10px;
-        span {
+        padding: 10px 20px;
+        span,
+        p {
           color: white;
           font-size: rem(22px);
           font-weight: 400;

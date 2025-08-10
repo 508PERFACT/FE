@@ -25,7 +25,6 @@ export const ChatBotPage = () => {
     setIsLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       const res = await api.post(`report/${reportId}/chat`, {
         userInput: questionText,
       });
@@ -79,7 +78,11 @@ export const ChatBotPage = () => {
                   key={index}
                   onClick={() => handleFormSubmit(null, question)}
                 >
-                  <span>{question}</span>
+                  <span>
+                    {question.split(',').map((s, i) => (
+                      <p key={i}>{s.trim()}</p>
+                    ))}
+                  </span>
                 </button>
               ))}
             </div>
