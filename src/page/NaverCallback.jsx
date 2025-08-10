@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { exchangeNaverCode } from '@/apis/auth';
-
+import styles from '@/styles/pages/NaverCallback.module.scss';
 export const NaverCallback = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -57,6 +57,7 @@ export const NaverCallback = () => {
         setErrorMessage(
           '로그인 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
         );
+        console.log(errorMessage);
       }
     })();
   }, [navigate, searchParams]);
@@ -70,11 +71,10 @@ export const NaverCallback = () => {
         height: '60vh',
       }}
     >
-      {errorMessage ? (
-        <div style={{ color: 'red' }}>{errorMessage}</div>
-      ) : (
-        <div>로그인 처리 중입니다...</div>
-      )}
+      <div className={styles.spinnerWrapper}>
+        <div className={styles.spinner}></div>
+        <span>로그인 처리 중입니다...</span>
+      </div>
     </div>
   );
 };
