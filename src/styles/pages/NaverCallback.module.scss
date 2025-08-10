@@ -1,0 +1,18 @@
+@use '../variables' as *;
+
+.spinnerWrapper {
+  @include flex(column, $gap: vh(47px));
+  .spinner {
+    width: vw(369px);
+    height: vw(369px);
+    border-radius: 100%;
+    border: vw(21px) solid white;
+    border-top: vw(21px) solid $color-main;
+    animation: spinner 1s infinite;
+  }
+  span {
+    color: #fff;
+    font-size: rem(30px);
+    font-weight: 700;
+  }
+}
