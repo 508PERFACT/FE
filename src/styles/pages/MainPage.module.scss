@@ -4,8 +4,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100vw;
-  margin-top: calc(114px + 312px);
+  height: 100vh;
   .content {
     @include flex(
       row,
