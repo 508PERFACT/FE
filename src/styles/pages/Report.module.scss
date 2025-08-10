@@ -154,10 +154,10 @@
         tbody {
           tr {
             td {
-              padding: 0 vw(35px);
+              min-height: vh(57px);
+              padding: vh(20px) vw(35px);
               color: #949494;
               font-weight: 500;
-              line-height: 305%; /* 57.95px */
             }
           }
         }

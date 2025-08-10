@@ -1,12 +1,17 @@
 import { signature } from '@/assets';
 import styles from '@/styles/pages/AlterNative.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export const AlterNative = () => {
   const { state } = useLocation();
   const { res, overallScore, reliability } = state || {};
-  const [reportData, setReportData] = useState(res);
+  const [reportData, setReportData] = useState();
+
+  useEffect(() => {
+    setReportData(res);
+    console.log(res);
+  }, [res]);
 
   if (!reportData || Object.keys(reportData).length === 0) {
     return <div>로딩 중...</div>;
@@ -26,13 +31,13 @@ export const AlterNative = () => {
         </div>
         <div className={styles.topSection}>
           <span className={styles.caption}>
-            {`(${formatYearMonth(reportData.publicationDate)})`}
+            {`(${formatYearMonth(reportData.opposingPublicationDate)})`}
           </span>
           <div className={styles.newsContent}>
             <div className={styles.sectionRow}>
               <div className={styles.labelGray}>기사 원문</div>
               <div>
-                <a href={reportData.url}>{reportData.title}</a>
+                <a href={reportData.url}>{reportData.opposingTitle}</a>
                 <p>
                   신뢰도 {overallScore}점 | {reliability?.message}
                 </p>
@@ -43,7 +48,7 @@ export const AlterNative = () => {
         <div className={styles.section}>
           <div className={styles.labelBlue}>반대시각 뉴스</div>
           <span className={styles.summary}>
-            {reportData.summary}
+            {reportData.opposingSummary}
             <br />
             {reportData.result}
           </span>
