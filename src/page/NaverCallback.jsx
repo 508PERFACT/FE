@@ -32,7 +32,6 @@ export const NaverCallback = () => {
       try {
         const response = await exchangeNaverCode({ code, state });
         const data = response?.data;
-        console.log(data);
 
         // 토큰 저장
         if (data?.result?.accessToken) {

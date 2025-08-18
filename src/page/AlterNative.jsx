@@ -10,7 +10,6 @@ export const AlterNative = () => {
 
   useEffect(() => {
     setReportData(res);
-    console.log(res);
   }, [res]);
 
   if (!reportData || Object.keys(reportData).length === 0) {

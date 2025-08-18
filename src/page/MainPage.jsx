@@ -50,7 +50,6 @@ export const MainPage = () => {
             try {
               setIsAnalyzing(true);
               const res = await api.post('/report', { url });
-              console.log(res);
 
               // reportId 추출하여 페이지 이동
               if (res.data && res.data.result && res.data.result.reportId) {
