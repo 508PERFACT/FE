@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from '@/styles/pages/ChatBotPage.module.scss';
 import { ChatBubble } from '@/components/ChatBubble';
 import { useParams } from 'react-router-dom';
@@ -11,11 +11,22 @@ export const ChatBotPage = () => {
   const [isChatStarted, setIsChatStarted] = useState(false);
   const [userInput, setUserInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const chatContainerRef = useRef(null);
 
   const { messages, recommendQuestions, addMessage } = useChatData(
     reportId,
     setIsChatStarted,
   );
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.lastElementChild?.scrollIntoView({
+        behavior: 'smooth',
+      });
+    }
+  }, [messages, isChatStarted]);
 
   const handleFormSubmit = async (e, questionText = userInput) => {
     if (e) e.preventDefault();
@@ -48,7 +59,7 @@ export const ChatBotPage = () => {
     <div className={styles.container}>
       {isChatStarted ? (
         <div className={styles.mainWrapper}>
-          <div className={styles.mainChatContent}>
+          <div ref={chatContainerRef} className={styles.mainChatContent}>
             {messages.map((msg) => (
               <ChatBubble
                 key={msg.chatId}
@@ -71,7 +82,11 @@ export const ChatBotPage = () => {
 
       <div className={styles.chatInput}>
         {!isChatStarted && (
-          <>
+          <div
+            className={`${styles.suggest} ${
+              recommendQuestions.length !== 0 && styles.visible
+            }`}
+          >
             <span className={styles.suggestedTitle}>추천질문</span>
             <div className={styles.suggestedContent}>
               {recommendQuestions.map((question, index) => (
@@ -82,24 +97,37 @@ export const ChatBotPage = () => {
                 >
                   <span>
                     {question.split(',').map((s, i) => (
-                      <p key={i}>{s.trim()}</p>
+                      <p key={i}>
+                        {s.trim()}
+                        {question.split(',').length - 1 > i && ','}
+                      </p>
                     ))}
                   </span>
                 </button>
               ))}
             </div>
-          </>
+          </div>
         )}
 
-        <form className={styles.chatInputForm} onSubmit={handleFormSubmit}>
+        <form
+          className={`${styles.chatInputForm} ${
+            isLoading ? styles.disabledInput : ''
+          }`}
+          onSubmit={handleFormSubmit}
+        >
           <input
             type="text"
             className={styles.chatInputText}
             placeholder="질문을 입력하세요."
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
+            disabled={isLoading}
           />
-          <button type="submit" className={styles.chatSendButton}>
+          <button
+            type="submit"
+            className={styles.chatSendButton}
+            disabled={isLoading}
+          >
             <img src={enter_icon} alt="" />
           </button>
         </form>

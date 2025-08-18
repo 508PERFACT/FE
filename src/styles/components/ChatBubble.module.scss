@@ -4,6 +4,7 @@
   @include flex();
   border-radius: 22px;
   position: relative;
+  animation: fadeUp 0.5s ease forwards;
   .text {
     font-size: rem(24px);
     font-weight: 500;
@@ -85,5 +86,18 @@
   50% {
     background-color: $color-main;
     transform: scale(1.3);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    transform: translateY(30px);
+    visibility: hidden;
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    visibility: visible;
+    opacity: 1;
   }
 }
