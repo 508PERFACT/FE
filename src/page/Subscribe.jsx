@@ -178,9 +178,12 @@ const ConfirmModal = ({ setIsModal }) => {
     <div className={styles.modalWrapper}>
       <div className={styles.modalContent}>
         <div className={styles.modalDesc}>
-          <span className={styles.modalTitle}>보관한 레포트가 사라집니다!</span>
+          <span className={styles.modalTitle}>
+            게스트는 구독을 이용할 수 없어요!
+          </span>
           <div className={styles.modalCaption}>
-            게스트 이용자는 레포트가 저장되지 않습니다. 로그인 후 이용해주세요!
+            게스트 이용자는 유료 구독 플랜을 이용할 수 없습니다. 로그인 후
+            이용해주세요!
           </div>
         </div>
         <div className={styles.modalButtonWrapper}>
