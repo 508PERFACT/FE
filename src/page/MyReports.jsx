@@ -36,6 +36,18 @@ export const MyReports = () => {
     getSubsFetch();
   }, []);
 
+  // 모달이 열릴 때 스크롤 제어
+  useEffect(() => {
+    if (isModal) {
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+    } else document.body.style.overflow = 'auto';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isModal]);
+
   const handlePageChange = (page) => {
     navigate(`/myreports/${page}`);
   };
