@@ -112,14 +112,14 @@ export const MyPage = () => {
               <span className={styles.modalTitle}>로그아웃 하시겠습니까?</span>
             </div>
             <div className={styles.modalButtonWrapper}>
-              <div className={styles.cancelButton} onClick={handleLogout}>
-                로그아웃
-              </div>
               <div
-                className={styles.confirmButton}
+                className={styles.cancelButton}
                 onClick={() => setIsLogoutModalOpen(false)}
               >
                 뒤로가기
+              </div>
+              <div className={styles.confirmButton} onClick={handleLogout}>
+                로그아웃
               </div>
             </div>
           </div>

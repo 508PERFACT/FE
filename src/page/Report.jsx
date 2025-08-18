@@ -21,7 +21,6 @@ export const Report = () => {
       try {
         const res = await api.get(`users/${id}`);
         if (res?.data.isSuccess) setReportData(res.data.result);
-        console.log(res);
       } catch (error) {
         console.error(error);
       }
