@@ -7,6 +7,7 @@ export const Subscribe = () => {
   const [isSubscribe, setIsSubscribe] = useState(false);
   const [modalType, setModalType] = useState('close');
   const [subscribeData, setSubscribeData] = useState({});
+  const [isModal, setIsModal] = useState(false);
 
   useEffect(() => {
     const getSubscribe = async () => {
@@ -14,6 +15,7 @@ export const Subscribe = () => {
         const res = await api.get('users/subscribe');
         if (res.data.isSuccess) setSubscribeData(res.data.result);
         // setSubscribeData(mockSubscription.result);
+        if (res.data.result.planName == 'GUEST') setIsModal(true);
       } catch (error) {
         console.error(error);
       }
@@ -23,7 +25,7 @@ export const Subscribe = () => {
 
   // 모달이 열릴 때 스크롤 제어
   useEffect(() => {
-    if (modalType !== 'close') {
+    if (modalType !== 'close' || isModal) {
       // 스크롤을 맨 위로 이동
       window.scrollTo(0, 0);
       // 스크롤 비활성화
@@ -37,7 +39,7 @@ export const Subscribe = () => {
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [modalType]);
+  }, [modalType, isModal]);
 
   return (
     <div className={styles.container}>
@@ -48,6 +50,7 @@ export const Subscribe = () => {
           setIsSubscribe={setIsSubscribe}
         />
       )}
+      {isModal && <ConfirmModal setIsModal={setIsModal} />}
 
       <div className={styles.title}>
         <img src={star_sub_blue} alt="" />
@@ -87,7 +90,12 @@ export const Subscribe = () => {
       </div>
       <div className={styles.buttonWrapper}>
         <button
-          className={`${styles.button} ${!isSubscribe && styles.isSubscribe}`}
+          className={`${styles.button} ${
+            !isSubscribe &&
+            subscribeData.planName !== 'GUEST' &&
+            styles.isSubscribe
+          }`}
+          disabled={subscribeData.planName === 'GUEST'}
           onClick={
             isSubscribe
               ? () => setModalType('unSubscribe')
@@ -97,7 +105,9 @@ export const Subscribe = () => {
           {isSubscribe ? '해지하기' : '유료플랜 구독하기'}
         </button>
         <div className={styles.caption}>
-          {isSubscribe
+          {subscribeData.planName === 'GUEST'
+            ? '게스트는 구독 혜택을 이용할 수 없어요.'
+            : isSubscribe
             ? '해지하면 혜택을 더 이상 누릴 수 없어요.'
             : '더 많은 크레딧과 광고 없는 퍼펙트를 즐겨봐요!'}
         </div>
@@ -158,6 +168,29 @@ const SubscribeModal = ({ modalType, setModalType, setIsSubscribe }) => {
             </div>
           </>
         )}
+      </div>
+    </div>
+  );
+};
+
+const ConfirmModal = ({ setIsModal }) => {
+  return (
+    <div className={styles.modalWrapper}>
+      <div className={styles.modalContent}>
+        <div className={styles.modalDesc}>
+          <span className={styles.modalTitle}>보관한 레포트가 사라집니다!</span>
+          <div className={styles.modalCaption}>
+            게스트 이용자는 레포트가 저장되지 않습니다. 로그인 후 이용해주세요!
+          </div>
+        </div>
+        <div className={styles.modalButtonWrapper}>
+          <div
+            className={styles.confirmButton}
+            onClick={() => setIsModal(false)}
+          >
+            확인
+          </div>
+        </div>
       </div>
     </div>
   );
