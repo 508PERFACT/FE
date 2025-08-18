@@ -2,9 +2,11 @@ import React from 'react';
 import { logo_title, main_img } from '@/assets';
 import styles from '@/styles/pages/Login.module.scss';
 import { useAuthNaver } from '@/hooks/useAuthNaver';
+import useAuthGuest from '@/hooks/useAuthGuest';
 
 export const Login = () => {
   const loginWithNaver = useAuthNaver();
+  const { handleGuest } = useAuthGuest();
 
   return (
     <div className={styles.container}>
@@ -25,6 +27,9 @@ export const Login = () => {
           <button className={styles.serviceButton}>서비스 소개</button>
           <button className={styles.naverButton} onClick={loginWithNaver}>
             네이버 로그인
+          </button>
+          <button className={styles.guestButton} onClick={handleGuest}>
+            게스트 로그인
           </button>
         </div>
       </div>

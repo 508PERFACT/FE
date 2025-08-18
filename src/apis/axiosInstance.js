@@ -52,7 +52,9 @@ api.interceptors.request.use((config) => {
 
   const url = config.url || '';
   const isAuthEndpoint =
-    url.includes('/auth/social-login') || url.includes('/auth/refresh');
+    url.includes('/auth/social-login') ||
+    url.includes('/auth/refresh') ||
+    url.includes('/guest-login');
 
   if (!config.headers) config.headers = {};
 
