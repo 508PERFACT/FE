@@ -39,3 +39,12 @@ $color-sub: #424145;
   padding: 10px;
   background: $background;
 }
+
+@mixin hoverEvent($bright: 0.9) {
+  filter: brightness(1);
+  transition: filter 0.3s ease;
+  &:hover {
+    filter: brightness($bright);
+    cursor: pointer;
+  }
+}
