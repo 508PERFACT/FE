@@ -8,6 +8,8 @@
   background-color: white;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 15%);
   z-index: 10;
+  padding: 0 50px;
+
   .content {
     @include flex($justify-content: space-between);
     width: 100%;
@@ -48,7 +50,7 @@
     height: 140px;
     .content {
       flex-direction: column;
-      gap: 10px;
+      gap: 20px;
     }
   }
 }
