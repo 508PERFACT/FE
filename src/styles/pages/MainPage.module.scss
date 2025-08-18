@@ -1,23 +1,18 @@
 @use '../variables' as *;
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
+  @include flex(column);
+  width: 100%;
+  height: 100%;
+  padding: 0 50px;
   .content {
-    @include flex(
-      row,
-      $justify-content: center,
-      $align-items: center,
-      $gap: vw(207px)
-    );
+    @include flex($justify-content: space-between, $gap: 20px);
     margin-bottom: vh(47px);
+    max-width: 850px;
+    width: 100%;
     .title {
       font-size: rem(30px);
-      font-weight: 400;
+      font-weight: 500;
       color: #141319;
     }
     .creditsWrapper {
@@ -37,14 +32,14 @@
   .inputWrapper {
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
     border-radius: 32px;
-    width: vw(924px);
-    padding: vh(18px) vw(28px);
-    @include flex(
-      row,
-      $justify-content: center,
-      $align-items: center,
-      $gap: vw(126px)
-    );
+    width: 100%;
+    max-width: 924px;
+    padding: vh(18px) 28px;
+    background-color: white;
+    &:focus {
+      background-color: #141319;
+    }
+    @include flex($gap: vw(126px));
     .inputContent {
       width: 100%;
       min-height: vh(36px);
@@ -60,6 +55,12 @@
         font-weight: 500;
         color: #cccccc;
       }
+      &:focus {
+        outline: none;
+      }
+    }
+    .inputButton {
+      @include hoverEvent(0.8);
     }
   }
 }
