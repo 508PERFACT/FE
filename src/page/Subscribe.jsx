@@ -3,12 +3,13 @@ import styles from '@/styles/pages/Subscribe.module.scss';
 import { logo_modal, star_sub_blue } from '@/assets';
 import api from '@/apis/axiosInstance';
 import { ConfirmModal } from '@/components/ConfirmModal';
+import useConfirmModal from '@/hooks/useConfirmModal';
 
 export const Subscribe = () => {
   const [isSubscribe, setIsSubscribe] = useState(false);
-  const [modalType, setModalType] = useState('close');
+
   const [subscribeData, setSubscribeData] = useState({});
-  const [isModal, setIsModal] = useState(false);
+  const { isModal, setIsModal, modalType, setModalType } = useConfirmModal();
 
   useEffect(() => {
     const getSubscribe = async () => {
@@ -23,24 +24,6 @@ export const Subscribe = () => {
     };
     getSubscribe();
   }, []);
-
-  // 모달이 열릴 때 스크롤 제어
-  useEffect(() => {
-    if (modalType !== 'close' || isModal) {
-      // 스크롤을 맨 위로 이동
-      window.scrollTo(0, 0);
-      // 스크롤 비활성화
-      document.body.style.overflow = 'hidden';
-    } else {
-      // 스크롤 활성화
-      document.body.style.overflow = 'auto';
-    }
-
-    // 컴포넌트 언마운트 시 스크롤 복원
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [modalType, isModal]);
 
   return (
     <div className={styles.container}>

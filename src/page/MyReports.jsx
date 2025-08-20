@@ -3,13 +3,15 @@ import { arrow_right, logo_modal, report_blue } from '@/assets';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import api from '@/apis/axiosInstance';
+import useConfirmModal from '@/hooks/useConfirmModal';
+import { ConfirmModal } from '@/components/ConfirmModal';
 
 export const MyReports = () => {
   const [pageData, setPageData] = useState();
   const navigate = useNavigate();
   const { id } = useParams();
   const currentPage = Number(id);
-  const [isModal, setIsModal] = useState(false);
+  const { isModal, setIsModal } = useConfirmModal();
 
   useEffect(() => {
     const getReportsList = async () => {
@@ -36,18 +38,6 @@ export const MyReports = () => {
     getSubsFetch();
   }, []);
 
-  // 모달이 열릴 때 스크롤 제어
-  useEffect(() => {
-    if (isModal) {
-      window.scrollTo(0, 0);
-      document.body.style.overflow = 'hidden';
-    } else document.body.style.overflow = 'auto';
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isModal]);
-
   const handlePageChange = (page) => {
     navigate(`/myreports/${page}`);
   };
@@ -65,7 +55,13 @@ export const MyReports = () => {
 
   return (
     <div className={styles.container}>
-      {isModal && <ConfirmModal setIsModal={setIsModal} />}
+      {isModal && (
+        <ConfirmModal
+          setIsModal={setIsModal}
+          title="보관한 레포트가 사라집니다!"
+          caption="게스트 이용자는 레포트가 저장되지 않습니다. 로그인 후 이용해주세요!"
+        />
+      )}
       <div className={styles.title}>
         <img src={report_blue} alt="" />
         <span>레포트 저장함</span>
@@ -119,29 +115,6 @@ export const MyReports = () => {
             <img src={arrow_right} alt="arrow" />
           </div>
         )}
-      </div>
-    </div>
-  );
-};
-
-const ConfirmModal = ({ setIsModal }) => {
-  return (
-    <div className={styles.modalWrapper}>
-      <div className={styles.modalContent}>
-        <div className={styles.modalDesc}>
-          <span className={styles.modalTitle}>보관한 레포트가 사라집니다!</span>
-          <div className={styles.modalCaption}>
-            게스트 이용자는 레포트가 저장되지 않습니다. 로그인 후 이용해주세요!
-          </div>
-        </div>
-        <div className={styles.modalButtonWrapper}>
-          <div
-            className={styles.confirmButton}
-            onClick={() => setIsModal(false)}
-          >
-            확인
-          </div>
-        </div>
       </div>
     </div>
   );
