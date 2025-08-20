@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from '@/styles/pages/Subscribe.module.scss';
 import { logo_modal, star_sub_blue } from '@/assets';
 import api from '@/apis/axiosInstance';
+import { ConfirmModal } from '@/components/ConfirmModal';
 
 export const Subscribe = () => {
   const [isSubscribe, setIsSubscribe] = useState(false);
@@ -50,7 +51,14 @@ export const Subscribe = () => {
           setIsSubscribe={setIsSubscribe}
         />
       )}
-      {isModal && <ConfirmModal setIsModal={setIsModal} />}
+      {isModal && (
+        <ConfirmModal
+          setIsModal={setIsModal}
+          title="게스트는 구독을 이용할 수 없어요!"
+          caption="게스트 이용자는 유료 구독 플랜을 이용할 수 없습니다. 로그인 후
+            이용해주세요!"
+        />
+      )}
 
       <div className={styles.title}>
         <img src={star_sub_blue} alt="" />
@@ -168,32 +176,6 @@ const SubscribeModal = ({ modalType, setModalType, setIsSubscribe }) => {
             </div>
           </>
         )}
-      </div>
-    </div>
-  );
-};
-
-const ConfirmModal = ({ setIsModal }) => {
-  return (
-    <div className={styles.modalWrapper}>
-      <div className={styles.modalContent}>
-        <div className={styles.modalDesc}>
-          <span className={styles.modalTitle}>
-            게스트는 구독을 이용할 수 없어요!
-          </span>
-          <div className={styles.modalCaption}>
-            게스트 이용자는 유료 구독 플랜을 이용할 수 없습니다. 로그인 후
-            이용해주세요!
-          </div>
-        </div>
-        <div className={styles.modalButtonWrapper}>
-          <div
-            className={styles.confirmButton}
-            onClick={() => setIsModal(false)}
-          >
-            확인
-          </div>
-        </div>
       </div>
     </div>
   );
